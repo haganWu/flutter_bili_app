@@ -1,3 +1,6 @@
+import 'package:flutter_bili_app/http/core/hi_net_adapter.dart';
+import 'package:flutter_bili_app/http/core/hi_net_error.dart';
+import 'package:flutter_bili_app/http/core/mock_adapter.dart';
 import 'package:flutter_bili_app/http/request/base_request.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 
@@ -12,17 +15,40 @@ class HiNet {
   }
 
   Future fire(BaseRequest request) async{
-    var response = await send(request);
-    var result = response['data'];
+    HiNetResponse? response;
+    dynamic error;
+    try{
+      response = await send(request);
+    } on HiNetError catch(e){
+      error = e;
+      response = e.data;
+    } catch(e) {
+      error = e;
+      LogUtil.L(tag, e.toString());
+    }
+    if(response == null){
+      LogUtil.L(tag, error.toString());
+    }
+    var result = response!.data;
     LogUtil.L(tag, "result: $result");
-    return result;
+
+    int status = response.statusCode;
+    switch(status){
+      case 200:
+        return result;
+      case 401:
+        throw NeedLogin();
+      case 403:
+        throw NeedAuth(message: result.toString(), data: result);
+      default:
+        throw HiNetError(code: status, message: result.toString(),data: result);
+    }
+
   }
 
   Future<dynamic> send<T>(BaseRequest request) async{
     LogUtil.L(tag, "url: ${request.url()}");
-    LogUtil.L(tag, "method: ${request.httpMethod()}");
-    request.addHeader("token","123");
-    LogUtil.L(tag, "header: ${request.header}");
-    return Future.value({"statusCode":200,"data":{"code":0,"message":'success'}});
+    HiNetAdapter adapter = MockAdapter();
+    return adapter.send(request);
   }
 }
