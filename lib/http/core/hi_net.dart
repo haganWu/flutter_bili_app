@@ -1,6 +1,6 @@
+import 'package:flutter_bili_app/http/core/dio_adapter.dart';
 import 'package:flutter_bili_app/http/core/hi_net_adapter.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
-import 'package:flutter_bili_app/http/core/mock_adapter.dart';
 import 'package:flutter_bili_app/http/request/base_request.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 
@@ -48,7 +48,7 @@ class HiNet {
 
   Future<dynamic> send<T>(BaseRequest request) async{
     LogUtil.L(tag, "url: ${request.url()}");
-    HiNetAdapter adapter = MockAdapter();
+    HiNetAdapter adapter = DioAdapter();
     return adapter.send(request);
   }
 }

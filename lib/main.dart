@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() async{
       TestRequest request = TestRequest();
-      request.add("aa", "aaaa").add("bb", "bbbbbb");
+      request.add("aa", "aaaa").add("bb", "bbbbbb").add("requestPrams", "dddd");
       try{
         var result = await HiNet.getInstance().fire(request);
         setState((){
@@ -66,6 +66,9 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       } on HiNetError catch(e){
         LogUtil.L("requestResult:",e.toString());
+        setState((){
+          resultTip = e.toString();
+        });
       }
   }
 
