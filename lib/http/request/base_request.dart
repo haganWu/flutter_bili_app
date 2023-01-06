@@ -1,3 +1,4 @@
+import 'package:flutter_bili_app/http/dao/login_dao.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 
 enum HttpMethod { GET, POST, DELETE }
@@ -36,11 +37,15 @@ abstract class BaseRequest {
     } else {
       uri = Uri.http(authority(), pathStr, params);
     }
+    if(needLogin()){
+      // 等需要登录的解接口设置登录令牌
+      addHeader(LoginDao.BOARDING_PASS, LoginDao.getBoardingPass());
+    }
     LogUtil.L("BaseRequest", "uri:${uri.toString()}");
     return uri.toString();
   }
 
-  bool needLog();
+  bool needLogin();
 
   // 查询参数
   Map<String, String> params = {};

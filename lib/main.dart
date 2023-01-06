@@ -7,6 +7,7 @@ import 'package:flutter_bili_app/http/core/hi_net_error.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
 import 'package:flutter_bili_app/http/model/result.dart';
 import 'package:flutter_bili_app/http/request/login_request.dart';
+import 'package:flutter_bili_app/http/request/notice_request.dart';
 import 'package:flutter_bili_app/http/request/test_request.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 
@@ -89,15 +90,26 @@ class _MyHomePageState extends State<MyHomePage> {
     // }
   }
 
-  void testInterface() {
-    var result = LoginDao.login("", "");
-    // var result = LoginDao.registration("", "","","");
-    LogUtil.L("mainTestInter", result.toString());
+  void testInterface() async {
+    var result = await LoginDao.login("HaganWu", "whh10173167");
+    // var result = LoginDao.registration("HaganWu", "whh10173167","3565827","9040");
+    LogUtil.L("mainTestLogin", result.toString());
+    if(result["code"] == 0 && result["data"] != null){
+      // 登录成功之后
+      testInterface1();
+    }
+  }
+  void testInterface1() async {
+  NoticeRequest noticeRequest = NoticeRequest();
+  noticeRequest.add("pageIndex", 1);
+  noticeRequest.add("pageSize", 10);
+  var result = await HiNet.getInstance().fire(noticeRequest);
+  LogUtil.L("mainTestNotice", result.toString());
   }
 
   void test2(){
     HiCache.getInstall().setString("test", "天王盖地虎");
-    LogUtil.L("preferences", HiCache.getInstall().get<String>("test"));
+    LogUtil.L("preferences", HiCache.getInstall().get<String>("test")??"");
   }
 
   void test1(){

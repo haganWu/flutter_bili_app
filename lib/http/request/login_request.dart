@@ -7,7 +7,7 @@ class LoginRequest extends BaseRequest {
   }
 
   @override
-  bool needLog() {
+  bool needLogin() {
     return false;
   }
 

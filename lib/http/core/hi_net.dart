@@ -29,10 +29,10 @@ class HiNet {
     if(response == null){
       LogUtil.L(tag, error.toString());
     }
-    var result = response!.data;
+    var result = response?.data;
     LogUtil.L(tag, "result: $result");
 
-    int status = response.statusCode;
+    int? status = response?.statusCode??-1;
     switch(status){
       case 200:
         return result;
@@ -41,7 +41,7 @@ class HiNet {
       case 403:
         throw NeedAuth(message: result.toString(), data: result);
       default:
-        throw HiNetError(code: status, message: result.toString(),data: result);
+        throw HiNetError(code: status, message: result?.toString()??"",data: result??"");
     }
 
   }
