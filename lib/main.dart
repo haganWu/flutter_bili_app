@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
+import 'package:flutter_bili_app/http/model/result.dart';
 import 'package:flutter_bili_app/http/request/test_request.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 
@@ -48,33 +49,48 @@ class _MyHomePageState extends State<MyHomePage> {
   String resultTip = "result ---";
 
   void _incrementCounter() async {
-    test();
-    return;
+    // test();
+    test1();
 
-    TestRequest request = TestRequest();
-    request.add("aa", "aaaa").add("bb", "bbbbbb").add("requestPrams", "dddd");
-    try {
-      var result = await HiNet.getInstance().fire(request);
-      setState(() {
-        resultTip = result.toString();
-      });
-      LogUtil.L("requestResult:", result.toString());
-    } on NeedAuth catch (e) {
-      LogUtil.L("requestResult:", e.toString());
-      setState(() {
-        resultTip = e.toString();
-      });
-    } on NeedLogin catch (e) {
-      LogUtil.L("requestResult:", e.toString());
-      setState(() {
-        resultTip = e.toString();
-      });
-    } on HiNetError catch (e) {
-      LogUtil.L("requestResult:", e.toString());
-      setState(() {
-        resultTip = e.toString();
-      });
-    }
+    // TestRequest request = TestRequest();
+    // request.add("aa", "aaaa").add("bb", "bbbbbb").add("requestPrams", "dddd");
+    // try {
+    //   var result = await HiNet.getInstance().fire(request);
+    //   setState(() {
+    //     resultTip = result.toString();
+    //   });
+    //   LogUtil.L("requestResult:", result.toString());
+    // } on NeedAuth catch (e) {
+    //   LogUtil.L("requestResult:", e.toString());
+    //   setState(() {
+    //     resultTip = e.toString();
+    //   });
+    // } on NeedLogin catch (e) {
+    //   LogUtil.L("requestResult:", e.toString());
+    //   setState(() {
+    //     resultTip = e.toString();
+    //   });
+    // } on HiNetError catch (e) {
+    //   LogUtil.L("requestResult:", e.toString());
+    //   setState(() {
+    //     resultTip = e.toString();
+    //   });
+    // }
+  }
+
+  void test1(){
+    // var ownerMap = {
+    //   "name": "伊零Onezero",
+    //   "face":
+    //   "http://i2.hdslb.com/bfs/face/1c57a17a7b077ccd19dba58a981a673799b85aef.jpg",
+    //   "fans": 0
+    // };
+    // // map 转 model
+    // Owner owner = Owner.fromJson(ownerMap);
+    // LogUtil.L("test1 map->model:", owner.toString());
+
+
+
   }
 
   void test() {
