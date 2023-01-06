@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/db/hi_cache.dart';
 import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
+import 'package:flutter_bili_app/http/dao/login_dao.dart';
 import 'package:flutter_bili_app/http/model/result.dart';
+import 'package:flutter_bili_app/http/request/login_request.dart';
 import 'package:flutter_bili_app/http/request/test_request.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 
@@ -57,8 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() async {
     // test();
-    test1();
-    test2();
+    // test1();
+    // test2();
+    testInterface();
 
     // TestRequest request = TestRequest();
     // request.add("aa", "aaaa").add("bb", "bbbbbb").add("requestPrams", "dddd");
@@ -84,6 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
     //     resultTip = e.toString();
     //   });
     // }
+  }
+
+  void testInterface() {
+    var result = LoginDao.login("", "");
+    // var result = LoginDao.registration("", "","","");
+    LogUtil.L("mainTestInter", result.toString());
   }
 
   void test2(){
@@ -144,4 +153,5 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
 }

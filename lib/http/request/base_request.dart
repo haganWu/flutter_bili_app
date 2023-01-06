@@ -41,15 +41,20 @@ abstract class BaseRequest {
   }
 
   bool needLog();
+
   // 查询参数
   Map<String, String> params = {};
+
   //添加参数
   BaseRequest add(String k, Object v) {
     params[k] = v.toString();
     return this;
   }
 
-  Map<String, dynamic> header = {};
+  Map<String, dynamic> header = {
+    "course-flag": "fa",
+    "auth-token": "ZmEtMjAyMS0wNC0xMiAyMToyMjoyMC1mYQ==fa"
+  };
 
   // 添加header
   BaseRequest addHeader(String k, Object v) {
