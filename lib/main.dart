@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
@@ -45,31 +47,48 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String resultTip = "result ---";
 
-  void _incrementCounter() async{
-      TestRequest request = TestRequest();
-      request.add("aa", "aaaa").add("bb", "bbbbbb").add("requestPrams", "dddd");
-      try{
-        var result = await HiNet.getInstance().fire(request);
-        setState((){
-          resultTip = result.toString();
-        });
-        LogUtil.L("requestResult:", result.toString());
-      } on NeedAuth catch(e){
-        LogUtil.L("requestResult:",e.toString());
-        setState((){
-          resultTip = e.toString();
-        });
-      } on NeedLogin catch(e){
-        LogUtil.L("requestResult:",e.toString());
-        setState((){
-          resultTip = e.toString();
-        });
-      } on HiNetError catch(e){
-        LogUtil.L("requestResult:",e.toString());
-        setState((){
-          resultTip = e.toString();
-        });
-      }
+  void _incrementCounter() async {
+    test();
+    return;
+
+    TestRequest request = TestRequest();
+    request.add("aa", "aaaa").add("bb", "bbbbbb").add("requestPrams", "dddd");
+    try {
+      var result = await HiNet.getInstance().fire(request);
+      setState(() {
+        resultTip = result.toString();
+      });
+      LogUtil.L("requestResult:", result.toString());
+    } on NeedAuth catch (e) {
+      LogUtil.L("requestResult:", e.toString());
+      setState(() {
+        resultTip = e.toString();
+      });
+    } on NeedLogin catch (e) {
+      LogUtil.L("requestResult:", e.toString());
+      setState(() {
+        resultTip = e.toString();
+      });
+    } on HiNetError catch (e) {
+      LogUtil.L("requestResult:", e.toString());
+      setState(() {
+        resultTip = e.toString();
+      });
+    }
+  }
+
+  void test() {
+    const jsonString =
+        "{ \"name\": \"flutter\", \"url\": \"https://coding.imooc.com/class/487.html\" }";
+    // json转map
+    Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+    LogUtil.L("testJson name:", jsonMap["name"]);
+    LogUtil.L("testJson url:", jsonMap["url"]);
+
+    // map转json
+    String json = jsonEncode(jsonMap);
+    LogUtil.L("testJson json:", json);
+
   }
 
   @override
