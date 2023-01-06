@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/db/hi_cache.dart';
 import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
 import 'package:flutter_bili_app/http/model/result.dart';
@@ -48,9 +49,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String resultTip = "result ---";
 
+  @override
+  void initState() {
+    HiCache.preInit();
+    super.initState();
+  }
+
   void _incrementCounter() async {
     // test();
     test1();
+    test2();
 
     // TestRequest request = TestRequest();
     // request.add("aa", "aaaa").add("bb", "bbbbbb").add("requestPrams", "dddd");
@@ -76,6 +84,11 @@ class _MyHomePageState extends State<MyHomePage> {
     //     resultTip = e.toString();
     //   });
     // }
+  }
+
+  void test2(){
+    HiCache.getInstall().setString("test", "天王盖地虎");
+    LogUtil.L("preferences", HiCache.getInstall().get<String>("test"));
   }
 
   void test1(){
