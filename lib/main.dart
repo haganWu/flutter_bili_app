@@ -3,12 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/db/hi_cache.dart';
 import 'package:flutter_bili_app/http/core/hi_net.dart';
-import 'package:flutter_bili_app/http/core/hi_net_error.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
-import 'package:flutter_bili_app/http/model/result.dart';
-import 'package:flutter_bili_app/http/request/login_request.dart';
 import 'package:flutter_bili_app/http/request/notice_request.dart';
-import 'package:flutter_bili_app/http/request/test_request.dart';
+import 'package:flutter_bili_app/page/registration_page.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 
 void main() {
@@ -26,7 +23,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const RegistrationPage(),
     );
   }
 }
@@ -91,8 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void testInterface() async {
-    var result = await LoginDao.login("HaganWu", "whh10173167");
-    // var result = LoginDao.registration("HaganWu", "whh10173167","3565827","9040");
+    var result = await LoginDao.login("", "");
+    // var result = LoginDao.registration("", "","","");
     LogUtil.L("mainTestLogin", result.toString());
     if(result["code"] == 0 && result["data"] != null){
       // 登录成功之后
