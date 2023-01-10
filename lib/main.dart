@@ -7,6 +7,7 @@ import 'package:flutter_bili_app/page/home_page.dart';
 import 'package:flutter_bili_app/page/login_page.dart';
 import 'package:flutter_bili_app/page/registration_page.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
+import 'package:flutter_bili_app/utils/toast.dart';
 
 import 'navigator/hi_navigator.dart';
 
@@ -45,6 +46,7 @@ class _BiliAppState extends State<BiliApp> {
 class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<BiliRouterPath> {
   final GlobalKey<NavigatorState> navigatorKey;
+
   // 为Navigator设置一个key，在必要的时候可通过navigatorKey.currentState来获取到NavigatorState对象
   BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>();
   RouteStatus _routeStatus = RouteStatus.home;
@@ -70,32 +72,54 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
         notifyListeners();
       }));
     } else if (routeStatus == RouteStatus.detail) {
-       page = pageWrap(VideoDetailPage(videoModel: videoModel));
+      page = pageWrap(VideoDetailPage(videoModel: videoModel));
     } else if (routeStatus == RouteStatus.registration) {
       page = pageWrap(RegistrationPage(onJumpToLogin: () {
         _routeStatus = RouteStatus.login;
         notifyListeners();
       }));
     } else if (routeStatus == RouteStatus.login) {
-      page = pageWrap(const LoginPage());
+      page = pageWrap(LoginPage(onJumpToRegistration: () {
+        _routeStatus = RouteStatus.registration;
+        notifyListeners();
+      }, onSuccess: () {
+        _routeStatus = RouteStatus.home;
+        notifyListeners();
+      }));
     }
     // 重新创建一个数组，否则pages会因为引用没有改变造成路由不会生效
-    if(page != null) {
+    if (page != null) {
       tempPages = [...tempPages, page];
     }
     // 管理路由堆栈
     pages = tempPages;
 
-    return Navigator(
-      key: navigatorKey,
-      pages: pages,
-      onPopPage: (route, result) {
-        // 判断是否可以返回上一页 如在首页用户点击物理返回键的时候禁止返回到欢迎页，可以在这里做处理
-        if (!route.didPop(result)) {
-          return false;
-        }
-        return true;
-      },
+    // 修复Android物理返回键无法返回上一个页面问题
+    return WillPopScope(
+      onWillPop: () async => !await navigatorKey.currentState!.maybePop(),
+        child: Navigator(
+          key: navigatorKey,
+          pages: pages,
+          onPopPage: (route, result) {
+            if (route.settings is MaterialPage) {
+              // 登录页面未登录时做返回拦截 添加拦截处理
+              if ((route.settings as MaterialPage).child is LoginPage) {
+                if (!hasLogin) {
+                  showErrorToast("请先登录");
+                  return false;
+                }
+              }
+            }
+
+            // 判断是否可以返回上一页 如在首页用户点击物理返回键的时候禁止返回到欢迎页，可以在这里做处理
+            if (!route.didPop(result)) {
+              return false;
+            }
+            // 执行返回操作
+            pages.removeLast();
+            return true;
+          },
+        )
     );
   }
 
@@ -113,8 +137,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
   bool get hasLogin => LoginDao.getBoardingPass().isNotEmpty;
 
   @override
-  Future<void> setNewRoutePath(BiliRouterPath configuration) async {
-  }
+  Future<void> setNewRoutePath(BiliRouterPath configuration) async {}
 }
 
 /// 常用于Web应用

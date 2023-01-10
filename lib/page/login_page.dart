@@ -9,8 +9,9 @@ import '../widget/login_effect.dart';
 import '../widget/login_input.dart';
 /// 登录页面
 class LoginPage extends StatefulWidget {
-  final VoidCallback? onJumpToRegistration;
-  const LoginPage({Key? key, this.onJumpToRegistration}) : super(key: key);
+  final VoidCallback onJumpToRegistration;
+  final VoidCallback onSuccess;
+  const LoginPage({Key? key,required this.onJumpToRegistration, required this.onSuccess}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -79,8 +80,7 @@ class _LoginPageState extends State<LoginPage> {
     var result = await LoginDao.login(userName, password);
     LogUtil.L(tag, result.toString());
     if(result["code"] == 0) {
-      // TODO 跳转到首页
-      showToast("Login Success");
+      widget.onSuccess();
     } else {
       showErrorToast(result["msg"]);
     }

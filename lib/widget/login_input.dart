@@ -81,7 +81,7 @@ class _LoginInputState extends State<LoginInput> {
         onChanged: widget.onValueChanged,
         obscureText: widget.obscureText,
         keyboardType: widget.keyboardType,
-        autofocus: !widget.obscureText,
+        autofocus: false,//!widget.obscureText,
         cursorColor: primary,
         style: const TextStyle(fontSize: 16,color: Colors.black, fontWeight: FontWeight.w300),
         decoration: InputDecoration(
