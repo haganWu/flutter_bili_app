@@ -90,9 +90,10 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
     if (page != null) {
       tempPages = [...tempPages, page];
     }
+    // 通知路由变化
+    HiNavigator.getInstance().notify(tempPages, pages);
     // 管理路由堆栈
     pages = tempPages;
-
     // 修复Android物理返回键无法返回上一个页面问题
     return WillPopScope(
         onWillPop: () async => !await navigatorKey.currentState!.maybePop(),
@@ -114,8 +115,11 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
             if (!route.didPop(result)) {
               return false;
             }
+            var tempPages = [...pages];
             // 执行返回操作
             pages.removeLast();
+            // 通知路由变化
+            HiNavigator.getInstance().notify(pages, tempPages);
             return true;
           },
         ));
