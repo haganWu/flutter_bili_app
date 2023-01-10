@@ -3,7 +3,7 @@ import 'package:flutter_bili_app/constant/color.dart';
 import 'package:flutter_bili_app/db/hi_cache.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
 import 'package:flutter_bili_app/http/model/video_model.dart';
-import 'package:flutter_bili_app/page/home_page.dart';
+import 'package:flutter_bili_app/navigator/bottom_navigator.dart';
 import 'package:flutter_bili_app/page/login_page.dart';
 import 'package:flutter_bili_app/page/registration_page.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
@@ -78,7 +78,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
     if (routeStatus == RouteStatus.home) {
       // 跳转到首页时需要将栈中的其他页面进行出栈，因为首页不能进行后退
       pages.clear();
-      page = pageWrap(const HomePage());
+      page = pageWrap(const BottomNavigator());
     } else if (routeStatus == RouteStatus.detail) {
       page = pageWrap(VideoDetailPage(videoModel: videoModel));
     } else if (routeStatus == RouteStatus.registration) {
