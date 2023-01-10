@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
+import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_bili_app/utils/toast.dart';
 import 'package:flutter_bili_app/widget/app_bar.dart';
@@ -10,8 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../widget/login_button.dart';
 
 class RegistrationPage extends StatefulWidget {
-  final VoidCallback? onJumpToLogin;
-  const RegistrationPage({Key? key, this.onJumpToLogin}) : super(key: key);
+  const RegistrationPage({Key? key}) : super(key: key);
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
@@ -29,7 +29,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar("注册", "登录", widget.onJumpToLogin),
+      appBar: appBar(title: "注册",rightTitle: "登录",rightButtonClick: (){HiNavigator.getInstance().onJumpTo(RouteStatus.login,args: {});}),
       body: ListView(
         children: [
           LoginEffect(protect:protect),
@@ -123,9 +123,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     var result = await LoginDao.registration(userName, password, imoocId, orderId);
     LogUtil.L(tag, result.toString());
     if(result["code"] == 0) {
-      if(widget.onJumpToLogin != null) {
-        widget.onJumpToLogin!();
-      }
+      HiNavigator.getInstance().onJumpTo(RouteStatus.login,args: {});
     } else {
       Fluttertoast.showToast(msg: result["msg"], toastLength: Toast.LENGTH_LONG);
     }

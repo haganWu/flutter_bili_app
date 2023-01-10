@@ -10,10 +10,10 @@ pageWrap(Widget child) {
 }
 
 /// 获取routeStatus在页面中的位置
-int getPageIndex(List<MaterialPage> pages, RouteStatus routeStatus){
-  for(int i = 0; i < pages.length; i++){
+int getPageIndex(List<MaterialPage> pages, RouteStatus routeStatus) {
+  for (int i = 0; i < pages.length; i++) {
     MaterialPage page = pages[i];
-    if(getStatus(page) == routeStatus){
+    if (getStatus(page) == routeStatus) {
       return i;
     }
   }
@@ -25,13 +25,15 @@ enum RouteStatus { login, registration, home, detail, unknown }
 
 /// 获取page对应的RouterStatus
 RouteStatus getStatus(MaterialPage page) {
-  if(page.child is LoginPage) {
+  if (page.child is LoginPage) {
     return RouteStatus.login;
-  } else if(page.child is RegistrationPage) {
+  } else if (page.child is RegistrationPage) {
     return RouteStatus.registration;
-  }if(page.child is HomePage) {
+  }
+  if (page.child is HomePage) {
     return RouteStatus.home;
-  }if(page.child is VideoDetailPage) {
+  }
+  if (page.child is VideoDetailPage) {
     return RouteStatus.detail;
   }
   return RouteStatus.unknown;
@@ -41,5 +43,42 @@ RouteStatus getStatus(MaterialPage page) {
 class RouterStatusInfo {
   final RouteStatus routeStatus;
   final Widget page;
+
   RouterStatusInfo(this.routeStatus, this.page);
+}
+
+class HiNavigator extends _RouteJumpListener {
+  static HiNavigator? _instance;
+
+  RouteJumpListener? _routeJumpListener;
+
+  HiNavigator._();
+
+  static HiNavigator getInstance() {
+    return _instance ??= HiNavigator._();
+  }
+
+  ///注册路由跳转逻辑
+  void registerRouteJump(RouteJumpListener routeJumpListener) {
+    _routeJumpListener = routeJumpListener;
+  }
+
+  @override
+  void onJumpTo(RouteStatus routeStatus, {Map? args}) {
+    _routeJumpListener?.onJumpTo!(routeStatus,args: args);
+  }
+}
+
+/// HiNavigator继承的抽象类
+abstract class _RouteJumpListener {
+  void onJumpTo(RouteStatus routeStatus, {Map? args});
+}
+
+typedef OnJumpTo = void Function(RouteStatus routeStatus, {Map? args});
+
+/// 定义路由跳转逻辑要实现的功能
+class RouteJumpListener {
+  OnJumpTo? onJumpTo;
+
+  RouteJumpListener({this.onJumpTo});
 }

@@ -45,10 +45,22 @@ class _BiliAppState extends State<BiliApp> {
 
 class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<BiliRouterPath> {
+  @override
   final GlobalKey<NavigatorState> navigatorKey;
 
   // 为Navigator设置一个key，在必要的时候可通过navigatorKey.currentState来获取到NavigatorState对象
-  BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>();
+  BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>() {
+    // 实现跳转逻辑
+    HiNavigator.getInstance().registerRouteJump(
+        RouteJumpListener(onJumpTo: (RouteStatus routeStatus, {Map? args}) {
+      _routeStatus = routeStatus;
+      if (routeStatus == RouteStatus.detail) {
+        videoModel = args?['videoModel'];
+      }
+      notifyListeners();
+    }));
+  }
+
   RouteStatus _routeStatus = RouteStatus.home;
   List<MaterialPage> pages = [];
   VideoModel? videoModel;
@@ -66,26 +78,13 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
     if (routeStatus == RouteStatus.home) {
       // 跳转到首页时需要将栈中的其他页面进行出栈，因为首页不能进行后退
       pages.clear();
-      page = pageWrap(HomePage(onJumpToDetail: (videoModel) {
-        this.videoModel = videoModel;
-        // 相当于setState
-        notifyListeners();
-      }));
+      page = pageWrap(const HomePage());
     } else if (routeStatus == RouteStatus.detail) {
       page = pageWrap(VideoDetailPage(videoModel: videoModel));
     } else if (routeStatus == RouteStatus.registration) {
-      page = pageWrap(RegistrationPage(onJumpToLogin: () {
-        _routeStatus = RouteStatus.login;
-        notifyListeners();
-      }));
+      page = pageWrap(const RegistrationPage());
     } else if (routeStatus == RouteStatus.login) {
-      page = pageWrap(LoginPage(onJumpToRegistration: () {
-        _routeStatus = RouteStatus.registration;
-        notifyListeners();
-      }, onSuccess: () {
-        _routeStatus = RouteStatus.home;
-        notifyListeners();
-      }));
+      page = pageWrap(const LoginPage());
     }
     // 重新创建一个数组，否则pages会因为引用没有改变造成路由不会生效
     if (page != null) {
@@ -96,7 +95,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
 
     // 修复Android物理返回键无法返回上一个页面问题
     return WillPopScope(
-      onWillPop: () async => !await navigatorKey.currentState!.maybePop(),
+        onWillPop: () async => !await navigatorKey.currentState!.maybePop(),
         child: Navigator(
           key: navigatorKey,
           pages: pages,
@@ -119,8 +118,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
             pages.removeLast();
             return true;
           },
-        )
-    );
+        ));
   }
 
   /// 拦截路由
