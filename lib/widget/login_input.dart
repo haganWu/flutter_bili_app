@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
 
 import '../constant/color.dart';
 
@@ -40,7 +39,6 @@ class _LoginInputState extends State<LoginInput> {
     super.initState();
     // 是否获取光标的监听
     _focusNode.addListener(() {
-      LogUtil.L(tag, 'HasFocus:${_focusNode.hasFocus }');
       if (widget.focusChanged != null) {
         widget.focusChanged!(_focusNode.hasFocus);
       }
