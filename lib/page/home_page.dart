@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/constant/color.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
+import 'package:flutter_bili_app/page/home_tab_page.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
-
-import '../http/model/video_model.dart';
+import 'package:underline_indicator/underline_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,13 +12,16 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   final String tag = "HomePage";
   RouteChangeListener? listener;
+  late TabController _controller;
+  var tabs = ["推荐", "热门", "追播", "影视", "搞笑", "日常", "综合", "手机游戏", "短片・手记・配音"];
 
   @override
   void initState() {
     super.initState();
+    _controller = TabController(length: tabs.length, vsync: this);
     HiNavigator.getInstance().addListener(listener = (RouterStatusInfo current, RouterStatusInfo? pre) {
       LogUtil.L(tag, "current:${current.page}, pre:${pre?.page}");
       if (widget == current.page || current.page is HomePage) {
@@ -38,20 +42,24 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: Column(
-            children: [
-              Text("首页"),
-              MaterialButton(
-                onPressed: () {
-                  HiNavigator.getInstance().onJumpTo(RouteStatus.detail, args: {'videoModel': VideoModel(666888)});
-                },
-                child: Text("详情"),
-              )
-            ],
-          ),
+        child: Column(
+          children: [
+            Container(
+              color: Colors.white,
+              child: _tabBar(),
+            ),
+            // 填充底部剩余空间
+            Flexible(
+                child: TabBarView(
+              controller: _controller,
+              children: tabs.map((tab) {
+                return HomeTabPage(name: tab);
+              }).toList(),
+            ))
+          ],
         ),
       ),
     );
@@ -60,4 +68,24 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   /// 不重新创建页面
   @override
   bool get wantKeepAlive => true;
+
+  _tabBar() {
+    return TabBar(
+      controller: _controller,
+      isScrollable: true,
+      labelColor: Colors.black,
+      indicator: const UnderlineIndicator(strokeCap: StrokeCap.round, borderSide: BorderSide(color: primary, width: 3), insets: EdgeInsets.only(left: 15, right: 15)),
+      tabs: tabs.map<Tab>((tab) {
+        return Tab(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 6, right: 6),
+            child: Text(
+              tab,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
 }
