@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/page/home_page.dart';
+import 'package:flutter_bili_app/navigator/bottom_navigator.dart';
 import 'package:flutter_bili_app/page/login_page.dart';
 import 'package:flutter_bili_app/page/registration_page.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
 
+import '../utils/LogUtil.dart';
 
-typedef RouteChangeListener(RouterStatusInfo current,RouterStatusInfo? pre);
+typedef RouteChangeListener(RouterStatusInfo current, RouterStatusInfo? pre);
 
 /// 创建页面
 pageWrap(Widget child) {
@@ -33,7 +34,7 @@ RouteStatus getStatus(MaterialPage page) {
   } else if (page.child is RegistrationPage) {
     return RouteStatus.registration;
   }
-  if (page.child is HomePage) {
+  if (page.child is BottomNavigator) {
     return RouteStatus.home;
   }
   if (page.child is VideoDetailPage) {
@@ -59,10 +60,19 @@ class HiNavigator extends _RouteJumpListener {
   List<RouteChangeListener> _listenerList = [];
   RouterStatusInfo? _current;
 
+  // 首页底部tab
+  RouterStatusInfo? _bottomTab;
+
   HiNavigator._();
 
   static HiNavigator getInstance() {
     return _instance ??= HiNavigator._();
+  }
+
+  /// 首页底部Tab切换监听
+  void onBottomTabChange(int index, Widget page) {
+    _bottomTab = RouterStatusInfo(RouteStatus.home, page);
+    _notify(_bottomTab!);
   }
 
   ///注册路由跳转逻辑
@@ -72,25 +82,26 @@ class HiNavigator extends _RouteJumpListener {
 
   /// 添加路由改变监听
   void addListener(RouteChangeListener listener) {
-    if(!_listenerList.contains(listener)){
+    if (!_listenerList.contains(listener)) {
       _listenerList.add(listener);
     }
   }
+
   /// 移除路由改变监听
   void removeListener(RouteChangeListener? listener) {
-    if(listener != null && _listenerList.contains(listener)){
+    if (listener != null && _listenerList.contains(listener)) {
       _listenerList.remove(listener);
     }
   }
 
   @override
   void onJumpTo(RouteStatus routeStatus, {Map? args}) {
-    _routeJumpListener?.onJumpTo!(routeStatus,args: args);
+    _routeJumpListener?.onJumpTo!(routeStatus, args: args);
   }
 
   /// 通知路由页面变化
-  void notify(List<MaterialPage> currentPageList,List<MaterialPage> prePageList){
-    if(currentPageList == prePageList) {
+  void notify(List<MaterialPage> currentPageList, List<MaterialPage> prePageList) {
+    if (currentPageList == prePageList) {
       return;
     }
     var current = RouterStatusInfo(getStatus(currentPageList.last), currentPageList.last.child);
@@ -98,8 +109,12 @@ class HiNavigator extends _RouteJumpListener {
   }
 
   void _notify(RouterStatusInfo current) {
+    if (current.page is BottomNavigator && _bottomTab != null) {
+      _current = _bottomTab!;
+    }
+    LogUtil.L(tag, "current:${current.page}, pre:${_current?.page}");
     _listenerList.forEach((listener) {
-      listener(current,_current);
+      listener(current, _current);
     });
     _current = current;
   }
