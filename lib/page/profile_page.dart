@@ -19,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Container(
             alignment: Alignment.center,
             child: const Text(
-              "ProfilePage",
+              "我的",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 30, color: Colors.red),
             ),

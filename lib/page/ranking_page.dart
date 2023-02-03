@@ -19,7 +19,7 @@ class _RankingPageState extends State<RankingPage> {
           child: Container(
             alignment: Alignment.center,
             child: const Text(
-              "RankingPage",
+              "排行",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 30, color: Colors.red),
             ),

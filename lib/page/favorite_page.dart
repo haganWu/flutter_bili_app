@@ -19,7 +19,7 @@ class _FavoritePageState extends State<FavoritePage> {
           child: Container(
             alignment: Alignment.center,
             child: const Text(
-              "FavoritePage",
+              "收藏",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 30, color: Colors.red),
             ),
