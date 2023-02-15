@@ -3,12 +3,12 @@ import 'package:flutter_bili_app/http/request/base_request.dart';
 class HomeRequest extends BaseRequest {
   @override
   HttpMethod httpMethod() {
-    throw HttpMethod.GET;
+    return HttpMethod.GET;
   }
 
   @override
   bool needLogin() {
-    throw true;
+    return true;
   }
 
   @override

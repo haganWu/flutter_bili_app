@@ -13,7 +13,7 @@ class HomeDao {
     // 查询 参数
     request.add("pageIndex", pageIndex).add("pageSize", pageSize);
     var result = await HiNet.getInstance().fire(request);
-    LogUtil.L("homeDao", result);
+    LogUtil.L("homeDao", result.toString());
     return HomeMo.fromJson(result['data']);
   }
 }
