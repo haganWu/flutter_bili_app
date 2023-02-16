@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/constant/color.dart';
 import 'package:flutter_bili_app/db/hi_cache.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
-import 'package:flutter_bili_app/http/model/video_model.dart';
 import 'package:flutter_bili_app/navigator/bottom_navigator.dart';
 import 'package:flutter_bili_app/page/login_page.dart';
 import 'package:flutter_bili_app/page/registration_page.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
 import 'package:flutter_bili_app/utils/toast.dart';
 
+import 'http/model/home_mo.dart';
 import 'navigator/hi_navigator.dart';
 
 void main() {
@@ -31,10 +31,7 @@ class _BiliAppState extends State<BiliApp> {
         future: HiCache.preInit(),
         builder: (BuildContext context, AsyncSnapshot<HiCache> snapshot) {
           // 定义router
-          var widget = snapshot.connectionState == ConnectionState.done
-              ? Router(routerDelegate: _routeDelegate)
-              : const Scaffold(
-                  body: Center(child: CircularProgressIndicator()));
+          var widget = snapshot.connectionState == ConnectionState.done ? Router(routerDelegate: _routeDelegate) : const Scaffold(body: Center(child: CircularProgressIndicator()));
           return MaterialApp(
             home: widget,
             theme: ThemeData(primarySwatch: white),
@@ -43,19 +40,17 @@ class _BiliAppState extends State<BiliApp> {
   }
 }
 
-class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<BiliRouterPath> {
+class BiliRouteDelegate extends RouterDelegate<BiliRouterPath> with ChangeNotifier, PopNavigatorRouterDelegateMixin<BiliRouterPath> {
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
   // 为Navigator设置一个key，在必要的时候可通过navigatorKey.currentState来获取到NavigatorState对象
   BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>() {
     // 实现跳转逻辑
-    HiNavigator.getInstance().registerRouteJump(
-        RouteJumpListener(onJumpTo: (RouteStatus routeStatus, {Map? args}) {
+    HiNavigator.getInstance().registerRouteJump(RouteJumpListener(onJumpTo: (RouteStatus routeStatus, {Map? args}) {
       _routeStatus = routeStatus;
       if (routeStatus == RouteStatus.detail) {
-        videoModel = args?['videoModel'];
+        videoMo = args?['videoMo'];
       }
       notifyListeners();
     }));
@@ -63,7 +58,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
 
   RouteStatus _routeStatus = RouteStatus.home;
   List<MaterialPage> pages = [];
-  VideoModel? videoModel;
+  VideoMo? videoMo;
 
   /// 返回路由堆栈信息
   @override
@@ -80,7 +75,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
       pages.clear();
       page = pageWrap(const BottomNavigator());
     } else if (routeStatus == RouteStatus.detail) {
-      page = pageWrap(VideoDetailPage(videoModel: videoModel));
+      page = pageWrap(VideoDetailPage(videoMo: videoMo));
     } else if (routeStatus == RouteStatus.registration) {
       page = pageWrap(const RegistrationPage());
     } else if (routeStatus == RouteStatus.login) {
@@ -130,7 +125,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath>
     if (_routeStatus != RouteStatus.registration && !hasLogin) {
       // 当前打开的不是注册页面并且用户没有登录
       return _routeStatus = RouteStatus.login;
-    } else if (videoModel != null) {
+    } else if (videoMo != null) {
       return _routeStatus = RouteStatus.detail;
     }
     return _routeStatus;
