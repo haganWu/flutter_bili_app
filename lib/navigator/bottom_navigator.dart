@@ -26,7 +26,14 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
   @override
   Widget build(BuildContext context) {
-    _pages = const [HomePage(), RankingPage(), FavoritePage(), ProfilePage()];
+    _pages = [
+      HomePage(
+        onJumpTo: (index) => _onJumpTo(index, pageChange: false),
+      ),
+      const RankingPage(),
+      const FavoritePage(),
+      const ProfilePage()
+    ];
     if (!_hasBuild) {
       // 页面第一次打开时通知打开是哪个tab
       HiNavigator.getInstance().onBottomTabChange(initialPage, _pages[initialPage]);

@@ -8,10 +8,13 @@ import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/page/home_tab_page.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_bili_app/utils/toast.dart';
+import 'package:flutter_bili_app/widget/hi_navigation_bar.dart';
 import 'package:underline_indicator/underline_indicator.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final ValueChanged<int>? onJumpTo;
+
+  const HomePage({Key? key, this.onJumpTo}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -55,6 +58,7 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
       body: SafeArea(
         child: Column(
           children: [
+            HiNavigationBar(height: 44, child: _appBar(), color: Colors.blue, statusStyle: StatusStyle.DARK_CONTENT),
             Container(
               color: Colors.white,
               child: _tabBar(),
@@ -121,5 +125,52 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
       LogUtil.L(tag, e.toString());
       showErrorToast(e.message);
     }
+  }
+
+  _appBar() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12, right: 12),
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () {
+              if (widget.onJumpTo != null) {
+                widget.onJumpTo!(3);
+              }
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(18),
+              child: const Image(
+                height: 36,
+                width: 36,
+                image: AssetImage('images/avatar.png'),
+              ),
+            ),
+          ),
+          Expanded(
+              child: Padding(
+            padding: const EdgeInsets.only(left: 12, right: 12),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Container(
+                padding: const EdgeInsets.only(left: 10),
+                height: 32,
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(color: Colors.grey[100]),
+                child: const Icon(Icons.search, color: Colors.grey),
+              ),
+            ),
+          )),
+          const Icon(Icons.explore_outlined, color: Colors.grey),
+          const Padding(
+            padding: EdgeInsets.only(left: 12),
+            child: Icon(
+              Icons.mail_outline,
+              color: Colors.grey,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
