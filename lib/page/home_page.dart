@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/constant/color.dart';
+import 'package:flutter_bili_app/core/hi_state.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
 import 'package:flutter_bili_app/http/dao/home_dao.dart';
 import 'package:flutter_bili_app/http/model/home_mo.dart';
@@ -16,7 +17,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   final String tag = "HomePage";
   RouteChangeListener? listener;
   late TabController _controller;
@@ -102,7 +103,6 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   void loadData() async {
     try {
       HomeMo result = await HomeDao.get(categoryName: "推荐");
-      LogUtil.L(tag, result.toString());
       if (result.categoryList != null) {
         _controller = TabController(length: result.categoryList!.length, vsync: this);
         setState(() {
