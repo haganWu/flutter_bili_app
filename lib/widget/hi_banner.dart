@@ -32,7 +32,7 @@ class HiBanner extends StatelessWidget {
       // 自定义指示器
       pagination: SwiperPagination(
         alignment: Alignment.bottomRight,
-        margin: EdgeInsets.only(right: right, bottom: 10),
+        margin: EdgeInsets.only(right: right, bottom: 6),
         builder: const DotSwiperPaginationBuilder(color: Colors.white60, size: 6, activeSize: 6),
       ),
     );

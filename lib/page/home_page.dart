@@ -58,7 +58,7 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
       body: SafeArea(
         child: Column(
           children: [
-            HiNavigationBar(height: 44, child: _appBar(), color: Colors.blue, statusStyle: StatusStyle.DARK_CONTENT),
+            HiNavigationBar(height: 44, child: _appBar(), color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT),
             Container(
               color: Colors.white,
               child: _tabBar(),
@@ -69,7 +69,7 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
               controller: _controller,
               children: categoryList.map((tab) {
                 return HomeTabPage(
-                  name: tab.name!,
+                  categoryName: tab.name!,
                   bannerList: tab.name! == "推荐" ? bannerList : null,
                 );
               }).toList(),
