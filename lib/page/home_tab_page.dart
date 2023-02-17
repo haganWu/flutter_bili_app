@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/constant/color.dart';
 import 'package:flutter_bili_app/core/hi_state.dart';
@@ -52,14 +51,16 @@ class _HomeTabPageState extends HiState<HomeTabPage> with AutomaticKeepAliveClie
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    // 出去ListView上边距
+    // 列表下载刷新 上拉加载更多
     return RefreshIndicator(
       onRefresh: _loadData,
       color: primary,
+      // 去除ListView上边距
       child: MediaQuery.removePadding(
           removeTop: true,
           context: context,
           child: HiNestedScrollView(
+             // physics: AlwaysScrollableScrollPhysics(), 解决只有一条数据是无法上下拉刷新
               controller: scrollController,
               itemCount: videoList.length,
               padding: const EdgeInsets.only(top: 8, left: 10, right: 10),
