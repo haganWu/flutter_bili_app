@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 import '../http/model/home_mo.dart';
 import '../utils/format_util.dart';
+import '../utils/view_util.dart';
 
 class VideoCard extends StatelessWidget {
   final String tag = 'VideoCard';
@@ -43,12 +43,10 @@ class VideoCard extends StatelessWidget {
   _itemImage(Size size) {
     return Stack(
       children: [
-        FadeInImage.memoryNetwork(
+        cachedImage(
           height: 120,
           width: (size.width / 2 - 20),
-          placeholder: kTransparentImage,
-          image: videoMo.cover ?? "",
-          fit: BoxFit.cover,
+          url: videoMo.cover ?? "",
         ),
         Positioned(
             left: 0,
@@ -128,8 +126,8 @@ class VideoCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                owner?.face ?? "",
+              child: cachedImage(
+                url: owner?.face ?? "",
                 width: 24,
                 height: 24,
               ),

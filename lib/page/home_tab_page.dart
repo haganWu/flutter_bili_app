@@ -51,6 +51,7 @@ class _HomeTabPageState extends HiState<HomeTabPage> with AutomaticKeepAliveClie
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     // 出去ListView上边距
     return RefreshIndicator(
       onRefresh: _loadData,

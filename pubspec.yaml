@@ -42,6 +42,7 @@ dependencies:
   flutter_swiper_null_safety: ^1.0.2
   flutter_nested: ^1.0.0
   transparent_image: ^2.0.0
+  cached_network_image: ^3.0.0-nullsafety
 
 dev_dependencies:
   flutter_test:
