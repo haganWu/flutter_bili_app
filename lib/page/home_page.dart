@@ -9,6 +9,7 @@ import 'package:flutter_bili_app/page/home_tab_page.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_bili_app/utils/toast.dart';
 import 'package:flutter_bili_app/widget/hi_navigation_bar.dart';
+import 'package:flutter_bili_app/widget/loading_container.dart';
 import 'package:underline_indicator/underline_indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,6 +27,7 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
   late TabController _controller;
   List<CategoryMo> categoryList = [];
   List<BannerMo> bannerList = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -56,25 +58,29 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
     super.build(context);
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            HiNavigationBar(height: 44, child: _appBar(), color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT),
-            Container(
-              color: Colors.white,
-              child: _tabBar(),
-            ),
-            // 填充底部剩余空间
-            Flexible(
-                child: TabBarView(
-              controller: _controller,
-              children: categoryList.map((tab) {
-                return HomeTabPage(
-                  categoryName: tab.name!,
-                  bannerList: tab.name! == "推荐" ? bannerList : null,
-                );
-              }).toList(),
-            ))
-          ],
+        child: LoadingContainer(
+          isLoading: _isLoading,
+          isCover: true,
+          child: Column(
+            children: [
+              HiNavigationBar(height: 44, child: _appBar(), color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT),
+              Container(
+                color: Colors.white,
+                child: _tabBar(),
+              ),
+              // 填充底部剩余空间
+              Flexible(
+                  child: TabBarView(
+                    controller: _controller,
+                    children: categoryList.map((tab) {
+                      return HomeTabPage(
+                        categoryName: tab.name!,
+                        bannerList: tab.name! == "推荐" ? bannerList : null,
+                      );
+                    }).toList(),
+                  ))
+            ],
+          ),
         ),
       ),
     );
@@ -111,19 +117,27 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
         _controller = TabController(length: result.categoryList!.length, vsync: this);
         setState(() {
           categoryList = result.categoryList!;
+          _isLoading = false;
         });
       }
       if (result.bannerList != null) {
         setState(() {
           bannerList = result.bannerList!;
+          _isLoading = false;
         });
       }
     } on NeedAuth catch (e) {
       LogUtil.L(tag, e.toString());
       showErrorToast(e.message);
+      setState(() {
+        _isLoading = false;
+      });
     } on HiNetError catch (e) {
       LogUtil.L(tag, e.toString());
       showErrorToast(e.message);
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -149,18 +163,18 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
           ),
           Expanded(
               child: Padding(
-            padding: const EdgeInsets.only(left: 12, right: 12),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Container(
-                padding: const EdgeInsets.only(left: 10),
-                height: 32,
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(color: Colors.grey[100]),
-                child: const Icon(Icons.search, color: Colors.grey),
-              ),
-            ),
-          )),
+                padding: const EdgeInsets.only(left: 12, right: 12),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    height: 32,
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(color: Colors.grey[100]),
+                    child: const Icon(Icons.search, color: Colors.grey),
+                  ),
+                ),
+              )),
           const Icon(Icons.explore_outlined, color: Colors.grey),
           const Padding(
             padding: EdgeInsets.only(left: 12),
