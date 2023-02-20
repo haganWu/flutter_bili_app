@@ -1,5 +1,8 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/constant/color.dart';
+import 'package:flutter_bili_app/utils/view_util.dart';
+import 'package:flutter_bili_app/widget/hi_video_controls.dart';
 import 'package:video_player/video_player.dart';
 
 /// 播放器组件
@@ -10,7 +13,7 @@ class VideoView extends StatefulWidget {
   final bool looping;
   final double aspectRatio;
 
-  const VideoView({Key? key, required this.url, this.cover = "", this.autoPlay = false, this.looping = false, this.aspectRatio = 16 / 9}) : super(key: key);
+  const VideoView({Key? key, required this.url, this.cover = "", this.autoPlay = true, this.looping = false, this.aspectRatio = 16 / 9}) : super(key: key);
 
   @override
   State<VideoView> createState() => _VideoViewState();
@@ -20,11 +23,36 @@ class _VideoViewState extends State<VideoView> {
   late VideoPlayerController _videoPlayerController;
   late ChewieController _chewieController;
 
+  // 视频封面
+  get _placeholder => FractionallySizedBox(
+        widthFactor: 1,
+        child: cachedImage(url: widget.cover),
+      );
+
+  // 进度条颜色
+  get _progressColors => ChewieProgressColors(playedColor: primary, handleColor: primary, backgroundColor: Colors.grey, bufferedColor: primary[50]!);
+
   @override
   void initState() {
     super.initState();
     _videoPlayerController = VideoPlayerController.network(widget.url);
-    _chewieController = ChewieController(videoPlayerController: _videoPlayerController, aspectRatio: widget.aspectRatio, autoPlay: widget.autoPlay, looping: widget.looping);
+    _chewieController = ChewieController(
+        videoPlayerController: _videoPlayerController,
+        aspectRatio: widget.aspectRatio,
+        autoPlay: widget.autoPlay,
+        looping: widget.looping,
+        // 视频封面
+        placeholder: _placeholder,
+        materialProgressColors: _progressColors,
+        // 静音播放
+        allowMuting: false,
+        //是否显式控制播放进度
+        allowPlaybackSpeedChanging: false,
+        customControls: HiVideoControls(
+          showLoadingOnInitialize: false,
+          showBigPlayIcon: false,
+          bottomGradient: blackLinearGradient(fromTop: false),
+        ));
   }
 
   @override
