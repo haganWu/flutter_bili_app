@@ -14,8 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
-class HiVideoControls extends StatefulWidget {
-  const HiVideoControls({
+class MaterialControls extends StatefulWidget {
+  const MaterialControls({
     this.showPlayButton = true,
     Key? key,
   }) : super(key: key);
@@ -24,11 +24,11 @@ class HiVideoControls extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _HiVideoControlsState();
+    return _MaterialControlsState();
   }
 }
 
-class _HiVideoControlsState extends State<HiVideoControls>
+class _MaterialControlsState extends State<MaterialControls>
     with SingleTickerProviderStateMixin {
   late PlayerNotifier notifier;
   late VideoPlayerValue _latestValue;
