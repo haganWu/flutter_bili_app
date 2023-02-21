@@ -4,13 +4,14 @@ import 'package:chewie/src/center_play_button.dart';
 import 'package:chewie/src/chewie_player.dart';
 import 'package:chewie/src/chewie_progress_colors.dart';
 import 'package:chewie/src/helpers/utils.dart';
-import 'package:chewie/src/material/material_progress_bar.dart';
 import 'package:chewie/src/models/subtitle_model.dart';
 import 'package:chewie/src/notifiers/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/constant/color.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
+
+import 'hi__progress_bar.dart';
 
 ///自定义播放器UI
 ///支持空安全的皮肤，for chewie: > ^1.2.0
@@ -417,8 +418,8 @@ class _HiVideoControlsState extends State<HiVideoControls>
   Widget _buildProgressBar() {
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.only(right: 15, left: 15),
-        child: MaterialVideoProgressBar(
+        padding: const EdgeInsets.only(right: 15, left: 15),
+        child: HiProgressBar(
           controller,
           onDragStart: () {
             setState(() {
