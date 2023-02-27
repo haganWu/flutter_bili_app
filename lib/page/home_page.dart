@@ -6,8 +6,11 @@ import 'package:flutter_bili_app/http/dao/home_dao.dart';
 import 'package:flutter_bili_app/http/model/home_mo.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/page/home_tab_page.dart';
+import 'package:flutter_bili_app/page/profile_page.dart';
+import 'package:flutter_bili_app/page/video_detail_page.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_bili_app/utils/toast.dart';
+import 'package:flutter_bili_app/utils/view_util.dart';
 import 'package:flutter_bili_app/widget/hi_navigation_bar.dart';
 import 'package:flutter_bili_app/widget/loading_container.dart';
 import 'package:underline_indicator/underline_indicator.dart';
@@ -21,19 +24,22 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixin, TickerProviderStateMixin, WidgetsBindingObserver {
   final String tag = "HomePage";
   RouteChangeListener? listener;
   late TabController _controller;
   List<CategoryMo> categoryList = [];
   List<BannerMo> bannerList = [];
   bool _isLoading = true;
+  late Widget _currentPage;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _controller = TabController(length: categoryList.length, vsync: this);
     HiNavigator.getInstance().addListener(listener = (RouterStatusInfo current, RouterStatusInfo? pre) {
+      this._currentPage = current.page;
       LogUtil.L(tag, "current:${current.page}, pre:${pre?.page}");
       if (widget == current.page || current.page is HomePage) {
         // 当前首页被打开,当前打开的是本页面
@@ -42,15 +48,51 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
         // 当前打开的不是这个页面，上次打开的是这个页面
         LogUtil.L(tag, "首页 -> onPause()");
       }
+      // 当页面返回到首页恢复首页的状态栏样式
+      if(pre?.page is VideoDetailPage && current.page is! ProfilePage){
+        var statusStyle = StatusStyle.DARK_CONTENT;
+        changeStatusBar(color: Colors.white, statusStyle: statusStyle);
+      }
     });
+
+
     loadData();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     HiNavigator.getInstance().removeListener(listener);
     _controller.dispose();
     super.dispose();
+  }
+
+  // 监听应用生命周期方法
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    LogUtil.L(tag, 'didChangeAppLifecycleState --- state:$state');
+    switch (state) {
+      // 非激活 即将暂停
+      case AppLifecycleState.inactive:
+        LogUtil.L(tag, '生命周期方法 -  非激活 即将暂停');
+        break;
+      // 暂停
+      case AppLifecycleState.paused:
+        LogUtil.L(tag, '生命周期方法 -  已暂停');
+        break;
+      // 重新激活
+      case AppLifecycleState.resumed:
+        LogUtil.L(tag, '生命周期方法 -  重新激活');
+        if(_currentPage is! VideoDetailPage){
+          changeStatusBar(color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT);
+        }
+        break;
+      // APP结束
+      case AppLifecycleState.detached:
+        LogUtil.L(tag, '生命周期方法 -  App结束');
+        break;
+    }
   }
 
   @override
@@ -71,14 +113,14 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
               // 填充底部剩余空间
               Flexible(
                   child: TabBarView(
-                    controller: _controller,
-                    children: categoryList.map((tab) {
-                      return HomeTabPage(
-                        categoryName: tab.name!,
-                        bannerList: tab.name! == "推荐" ? bannerList : null,
-                      );
-                    }).toList(),
-                  ))
+                controller: _controller,
+                children: categoryList.map((tab) {
+                  return HomeTabPage(
+                    categoryName: tab.name!,
+                    bannerList: tab.name! == "推荐" ? bannerList : null,
+                  );
+                }).toList(),
+              ))
             ],
           ),
         ),
@@ -95,7 +137,8 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
       controller: _controller,
       isScrollable: true,
       labelColor: Colors.black,
-      indicator: const UnderlineIndicator(strokeCap: StrokeCap.round, borderSide: BorderSide(color: primary, width: 3), insets: EdgeInsets.only(left: 15, right: 15)),
+      indicator: const UnderlineIndicator(
+          strokeCap: StrokeCap.round, borderSide: BorderSide(color: primary, width: 3), insets: EdgeInsets.only(left: 15, right: 15)),
       tabs: categoryList.map<Tab>((tab) {
         return Tab(
           child: Padding(
@@ -163,18 +206,18 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
           ),
           Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left: 12, right: 12),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 10),
-                    height: 32,
-                    alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(color: Colors.grey[100]),
-                    child: const Icon(Icons.search, color: Colors.grey),
-                  ),
-                ),
-              )),
+            padding: const EdgeInsets.only(left: 12, right: 12),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Container(
+                padding: const EdgeInsets.only(left: 10),
+                height: 32,
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(color: Colors.grey[100]),
+                child: const Icon(Icons.search, color: Colors.grey),
+              ),
+            ),
+          )),
           const Icon(Icons.explore_outlined, color: Colors.grey),
           const Padding(
             padding: EdgeInsets.only(left: 12),
