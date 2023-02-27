@@ -29,6 +29,9 @@ class _HiNavigationBarState extends State<HiNavigationBar> {
     _statusBarInit();
     // 状态栏高度
     var top = MediaQuery.of(context).padding.top;
+    if(top == 0) {
+      top = 24;
+    }
     return Container(
       // 屏幕宽度
       width: MediaQuery.of(context).size.width,

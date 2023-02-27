@@ -31,7 +31,11 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
           context: context,
           child: Column(
             children: [
-              if (Platform.isIOS) const HiNavigationBar(color: Colors.black, statusStyle: StatusStyle.LIGHT_CONTENT),
+              HiNavigationBar(
+                color: Colors.white,
+                statusStyle: StatusStyle.LIGHT_CONTENT,
+                height: Platform.isAndroid ? 0 : 36,
+              ),
               _videoView(),
               Text('视频详情页， vid:${widget.videoMo?.vid}'),
               Text('视频详情页， title:${widget.videoMo?.title}')
