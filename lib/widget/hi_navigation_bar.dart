@@ -9,9 +9,12 @@ class HiNavigationBar extends StatefulWidget {
   final StatusStyle statusStyle;
   final Color color;
   final double height;
+  final double top;
   final Widget? child;
 
-  const HiNavigationBar({Key? key, this.statusStyle = StatusStyle.DARK_CONTENT, this.color = Colors.white, this.height = 46, this.child}) : super(key: key);
+  const HiNavigationBar(
+      {Key? key, this.statusStyle = StatusStyle.DARK_CONTENT, this.color = Colors.white, this.height = 32, this.top = 32, this.child})
+      : super(key: key);
 
   @override
   State<HiNavigationBar> createState() => _HiNavigationBarState();
@@ -29,13 +32,10 @@ class _HiNavigationBarState extends State<HiNavigationBar> {
     _statusBarInit();
     // 状态栏高度
     var top = MediaQuery.of(context).padding.top;
-    if(top == 0) {
-      top = 24;
-    }
     return Container(
       // 屏幕宽度
       width: MediaQuery.of(context).size.width,
-      height: top + widget.height,
+      height: widget.top + widget.height,
       child: widget.child,
       padding: EdgeInsets.only(top: top),
       decoration: BoxDecoration(
@@ -48,6 +48,6 @@ class _HiNavigationBarState extends State<HiNavigationBar> {
     // 沉浸式状态栏样式 TODO插件不止空安全，已移除
     // FlutterStatusbarManager.setColor(color, animated: false);
     // FlutterStatusbarManager.setStyle(statusStyle == StatusStyle.DARK_CONTENT ? StatusBarStyle.DARK_CONTENT : StatusBarStyle.LIGHT_CONTENT);
-    changeStatusBar(color: widget.color,statusStyle: widget.statusStyle);
+    changeStatusBar(color: widget.color, statusStyle: widget.statusStyle);
   }
 }

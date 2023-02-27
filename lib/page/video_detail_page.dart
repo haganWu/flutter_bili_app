@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
 import 'package:flutter_bili_app/widget/app_bar.dart';
+import 'package:flutter_bili_app/widget/expandable_content.dart';
 import 'package:flutter_bili_app/widget/video_header.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 import '../http/model/home_mo.dart';
@@ -47,7 +48,8 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
               HiNavigationBar(
                 color: Colors.white,
                 statusStyle: StatusStyle.LIGHT_CONTENT,
-                height: Platform.isAndroid ? 0 : 36,
+                height: Platform.isAndroid ? 0 : 28,
+                top: 30,
               ),
               _buildVideoView(),
               _buildTabNavigation(),
@@ -122,17 +124,25 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   _buildDetailListPage() {
     return ListView(
       padding: const EdgeInsets.all(0),
-      children: [...buildContents()],
+      children: [
+        ...buildContents(),
+        Container(
+          height: 500,
+          margin: EdgeInsets.only(top: 10),
+          alignment: Alignment.topLeft,
+          decoration: BoxDecoration(color: Colors.lightBlue),
+          child: Text('展开列表'),
+        )
+      ],
     );
   }
 
   buildContents() {
     return [
-      Container(
-        child: VideoHeader(
-          owner: widget.videoMo!.owner!,
-        ),
-      )
+      VideoHeader(
+        owner: widget.videoMo!.owner!,
+      ),
+      ExpandableContent(videoMo: widget.videoMo!),
     ];
   }
 }

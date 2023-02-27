@@ -103,7 +103,7 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
           isCover: true,
           child: Column(
             children: [
-              HiNavigationBar(height: 44, child: _appBar(), color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT),
+              HiNavigationBar(height: 36,top: 16, child: _appBar(), color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT),
               Container(
                 color: Colors.white,
                 child: _tabBar(),
