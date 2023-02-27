@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
 import 'package:flutter_bili_app/widget/app_bar.dart';
+import 'package:flutter_bili_app/widget/video_header.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 import '../http/model/home_mo.dart';
 import '../widget/hi_navigation_bar.dart';
@@ -50,6 +51,17 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
               ),
               _buildVideoView(),
               _buildTabNavigation(),
+              Flexible(
+                  child: TabBarView(
+                controller: _controller,
+                children: [
+                  _buildDetailListPage(),
+                  const Text(
+                    "评论",
+                    style: TextStyle(fontSize: 30, color: Colors.lightBlue),
+                  )
+                ],
+              ))
             ],
           )),
     );
@@ -105,5 +117,22 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
             ),
           );
         }).toList());
+  }
+
+  _buildDetailListPage() {
+    return ListView(
+      padding: const EdgeInsets.all(0),
+      children: [...buildContents()],
+    );
+  }
+
+  buildContents() {
+    return [
+      Container(
+        child: VideoHeader(
+          owner: widget.videoMo!.owner!,
+        ),
+      )
+    ];
   }
 }
