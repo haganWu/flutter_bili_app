@@ -11,8 +11,8 @@ class VideoModel {
   int? duration;
   Owner? owner;
   int? reply;
-  int? favorite;
-  int? like;
+  int favorite = 0;
+  int like = 0;
   int? coin;
   int? share;
   String? createTime;
@@ -31,8 +31,8 @@ class VideoModel {
       this.duration,
       this.owner,
       this.reply,
-      this.favorite,
-      this.like,
+      this.favorite = 0,
+      this.like = 0,
       this.coin,
       this.share,
       this.createTime,

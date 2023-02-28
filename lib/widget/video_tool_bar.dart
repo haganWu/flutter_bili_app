@@ -45,17 +45,20 @@ class VideoToolBar extends StatelessWidget {
     if (text is int) {
       text = countMillionFormat(text);
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          iconData,
-          color: tint ? primary : Colors.grey,
-          size: 16,
-        ),
-        hiSpace(),
-        Text(text, style: TextStyle(fontSize: 12, color: tint ? primary : Colors.grey))
-      ],
+    return InkWell(
+      onTap: onClickCallback,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            iconData,
+            color: tint ? primary : Colors.grey,
+            size: 16,
+          ),
+          hiSpace(),
+          Text(text, style: TextStyle(fontSize: 12, color: tint ? primary : Colors.grey))
+        ],
+      ),
     );
   }
 }

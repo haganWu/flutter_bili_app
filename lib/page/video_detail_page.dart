@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
+import 'package:flutter_bili_app/http/dao/favorite_dao.dart';
+import 'package:flutter_bili_app/http/dao/like_dao.dart';
 import 'package:flutter_bili_app/http/dao/video_detail_dao.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
 import 'package:flutter_bili_app/widget/app_bar.dart';
@@ -178,13 +180,67 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
     ];
   }
 
-  void _onLike() {}
+  void _onLike() async {
+    try {
+      var result = await LikeDao.like(videoModel.vid!, !videoDetailMo!.isLike!);
+      LogUtil.L(tag, result.toString());
+      if (result['code'] == 0) {
+        videoDetailMo!.isLike = !videoDetailMo!.isLike!;
+      }
+      if (videoDetailMo!.isLike!) {
+        videoModel.like += 1;
+      } else {
+        videoModel.like -= 1;
+        if (videoModel.like < 0) {
+          videoModel.like = 0;
+        }
+      }
+      setState(() {
+        videoModel = videoModel;
+        videoDetailMo = videoDetailMo;
+      });
+      showToast(result['msg']);
+    } on NeedAuth catch (e) {
+      LogUtil.L(tag, e.toString());
+      showErrorToast(e.message);
+    } on HiNetError catch (e) {
+      LogUtil.L(tag, e.toString());
+      showErrorToast(e.message);
+    }
+  }
 
   void _onUnLike() {}
 
   void _onCoin() {}
 
-  void _onFavorite() {}
+  void _onFavorite() async {
+    try {
+      var result = await FavoriteDao.favorite(videoModel.vid!, !videoDetailMo!.isFavorite!);
+          LogUtil.L(tag, result.toString());
+      if (result['code'] == 0) {
+        videoDetailMo!.isFavorite = !videoDetailMo!.isFavorite!;
+      }
+      if (videoDetailMo!.isFavorite!) {
+        videoModel.favorite += 1;
+      } else {
+        videoModel.favorite -= 1;
+        if (videoModel.favorite < 0) {
+          videoModel.favorite = 0;
+        }
+      }
+      setState(() {
+        videoModel = videoModel;
+        videoDetailMo = videoDetailMo;
+      });
+      showToast(result['msg']);
+    } on NeedAuth catch (e) {
+      LogUtil.L(tag, e.toString());
+      showErrorToast(e.message);
+    } on HiNetError catch (e) {
+      LogUtil.L(tag, e.toString());
+      showErrorToast(e.message);
+    }
+  }
 
   void _onShare() {}
 }
