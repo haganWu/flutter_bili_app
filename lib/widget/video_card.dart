@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 
-import '../http/model/home_mo.dart';
+import '../http/model/video_model.dart';
 import '../utils/format_util.dart';
 import '../utils/view_util.dart';
 
 class VideoCard extends StatelessWidget {
   final String tag = 'VideoCard';
-  final VideoMo videoMo;
+  final VideoModel videoMo;
 
   const VideoCard({Key? key, required this.videoMo}) : super(key: key);
 

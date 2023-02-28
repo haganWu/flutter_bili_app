@@ -9,6 +9,7 @@ import 'package:flutter_bili_app/widget/video_card.dart';
 import 'package:flutter_nested/flutter_nested.dart';
 
 import '../http/dao/home_dao.dart';
+import '../http/model/video_model.dart';
 
 class HomeTabPage extends StatefulWidget {
   final String categoryName;
@@ -22,7 +23,7 @@ class HomeTabPage extends StatefulWidget {
 
 class _HomeTabPageState extends HiState<HomeTabPage> with AutomaticKeepAliveClientMixin {
   final String tag = "_HomeTabPageState";
-  List<VideoMo> videoList = [];
+  List<VideoModel> videoList = [];
   int pageIndex = 1;
   bool loading = false;
   ScrollController scrollController = ScrollController();

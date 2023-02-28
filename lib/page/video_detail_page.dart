@@ -1,16 +1,21 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/http/core/hi_net_error.dart';
+import 'package:flutter_bili_app/http/dao/video_detail_dao.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
 import 'package:flutter_bili_app/widget/app_bar.dart';
 import 'package:flutter_bili_app/widget/expandable_content.dart';
 import 'package:flutter_bili_app/widget/video_header.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
-import '../http/model/home_mo.dart';
+import '../http/model/video_model.dart';
+import '../utils/LogUtil.dart';
+import '../utils/toast.dart';
 import '../widget/hi_navigation_bar.dart';
 import '../widget/hi_tab.dart';
+import 'package:flutter_bili_app/http/model/video_detail_mo.dart';
 
 class VideoDetailPage extends StatefulWidget {
-  final VideoMo? videoMo;
+  final VideoModel videoMo;
 
   const VideoDetailPage({Key? key, required this.videoMo}) : super(key: key);
 
@@ -22,6 +27,8 @@ class VideoDetailPage extends StatefulWidget {
 class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderStateMixin {
   late TabController _controller;
   List tabs = ["简介", "评论"];
+  final String tag = "VideoDetailPage";
+  VideoDetailMo? videoDetailMo;
 
   @override
   void initState() {
@@ -29,6 +36,24 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
     // 设置黑色状态栏-Android
     changeStatusBar(color: Colors.black, statusStyle: StatusStyle.LIGHT_CONTENT);
     _controller = TabController(length: tabs.length, vsync: this);
+    loadDetailData();
+  }
+
+  void loadDetailData() async {
+    try {
+      VideoDetailMo result = await VideoDetailDao.get(vid: widget.videoMo.vid!);
+      LogUtil.L(tag, result.toJson().toString());
+      setState(() {
+        videoDetailMo = result;
+      });
+    } on NeedAuth catch (e) {
+      LogUtil.L(tag, e.toString());
+      showErrorToast(e.message);
+    } on HiNetError catch (e) {
+      LogUtil.L(tag, e.toString());
+      showErrorToast(e.message);
+      setState(() {});
+    }
   }
 
   @override
@@ -58,9 +83,9 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
                 controller: _controller,
                 children: [
                   _buildDetailListPage(),
-                  const Text(
-                    "评论",
-                    style: TextStyle(fontSize: 30, color: Colors.lightBlue),
+                  Text(
+                   "评论",
+                    style: const TextStyle(fontSize: 30, color: Colors.lightBlue),
                   )
                 ],
               ))
@@ -70,7 +95,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   }
 
   _buildVideoView() {
-    VideoMo model = widget.videoMo!;
+    VideoModel model = widget.videoMo;
     return VideoView(
       url: model.url!,
       cover: model.cover!,
@@ -86,7 +111,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
       child: Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: 20),
-        height: 30,
+        height: 36,
         color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,10 +153,10 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
         ...buildContents(),
         Container(
           height: 500,
-          margin: EdgeInsets.only(top: 10),
+          margin: const EdgeInsets.only(top: 10),
           alignment: Alignment.topLeft,
-          decoration: BoxDecoration(color: Colors.lightBlue),
-          child: Text('展开列表'),
+          decoration: const BoxDecoration(color: Colors.lightBlue),
+          child: Text(videoDetailMo != null ? videoDetailMo!.videoInfo!.desc! : "..."),
         )
       ],
     );
@@ -140,9 +165,9 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   buildContents() {
     return [
       VideoHeader(
-        owner: widget.videoMo!.owner!,
+        owner: widget.videoMo.owner!,
       ),
-      ExpandableContent(videoMo: widget.videoMo!),
+      ExpandableContent(videoMo: widget.videoMo),
     ];
   }
 }

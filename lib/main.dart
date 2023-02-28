@@ -7,8 +7,7 @@ import 'package:flutter_bili_app/page/login_page.dart';
 import 'package:flutter_bili_app/page/registration_page.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
 import 'package:flutter_bili_app/utils/toast.dart';
-
-import 'http/model/home_mo.dart';
+import 'http/model/video_model.dart';
 import 'navigator/hi_navigator.dart';
 
 void main() {
@@ -58,7 +57,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath> with ChangeNotifi
 
   RouteStatus _routeStatus = RouteStatus.home;
   List<MaterialPage> pages = [];
-  VideoMo? videoMo;
+  VideoModel? videoMo;
 
   /// 返回路由堆栈信息
   @override
@@ -75,7 +74,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRouterPath> with ChangeNotifi
       pages.clear();
       page = pageWrap(const BottomNavigator());
     } else if (routeStatus == RouteStatus.detail) {
-      page = pageWrap(VideoDetailPage(videoMo: videoMo));
+      page = pageWrap(VideoDetailPage(videoMo: videoMo!));
     } else if (routeStatus == RouteStatus.registration) {
       page = pageWrap(const RegistrationPage());
     } else if (routeStatus == RouteStatus.login) {

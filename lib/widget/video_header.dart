@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/constant/color.dart';
-import 'package:flutter_bili_app/http/model/home_mo.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_bili_app/utils/format_util.dart';
+import '../http/model/video_model.dart';
+
 
 class VideoHeader extends StatelessWidget {
   final Owner owner;

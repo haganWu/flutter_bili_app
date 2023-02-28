@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/http/model/home_mo.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
 
+import '../http/model/video_model.dart';
+
 class ExpandableContent extends StatefulWidget {
-  final VideoMo videoMo;
+  final VideoModel videoMo;
 
   const ExpandableContent({Key? key, required this.videoMo}) : super(key: key);
 

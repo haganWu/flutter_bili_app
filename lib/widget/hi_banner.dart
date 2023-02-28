@@ -4,6 +4,7 @@ import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
 import '../http/model/home_mo.dart';
+import '../http/model/video_model.dart';
 
 class HiBanner extends StatelessWidget {
   final String tag = "HiBanner";
@@ -59,7 +60,7 @@ class HiBanner extends StatelessWidget {
 
   void _handleClick(BannerMo bannerMo) {
     if (bannerMo.type == "video") {
-      HiNavigator.getInstance().onJumpTo(RouteStatus.detail, args: {'videoMo': VideoMo(vid: bannerMo.url)});
+      HiNavigator.getInstance().onJumpTo(RouteStatus.detail, args: {'videoMo': VideoModel(vid: bannerMo.url)});
     } else {
       LogUtil.L(tag, 'type: ${bannerMo.type!}, url:${bannerMo.url}');
     }
