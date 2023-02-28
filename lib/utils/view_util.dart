@@ -41,3 +41,20 @@ smallIconText(IconData iconData, var text) {
     ),
   ];
 }
+
+/// 分割线
+borderLine({required BuildContext context, bool bottom = true, bool top = false}) {
+  BorderSide borderSide = const BorderSide(width: 0.5, color: Color(0xFFEEEEEE));
+  return Border(
+    bottom: bottom ? borderSide : BorderSide.none,
+    top: top ? borderSide : BorderSide.none,
+  );
+}
+
+/// 间距
+SizedBox hiSpace({double width = 1, double height = 1}) {
+  return SizedBox(
+    width: width,
+    height: height,
+  );
+}

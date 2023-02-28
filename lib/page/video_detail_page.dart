@@ -6,6 +6,7 @@ import 'package:flutter_bili_app/utils/view_util.dart';
 import 'package:flutter_bili_app/widget/app_bar.dart';
 import 'package:flutter_bili_app/widget/expandable_content.dart';
 import 'package:flutter_bili_app/widget/video_header.dart';
+import 'package:flutter_bili_app/widget/video_tool_bar.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 import '../http/model/video_model.dart';
 import '../utils/LogUtil.dart';
@@ -29,6 +30,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   List tabs = ["简介", "评论"];
   final String tag = "VideoDetailPage";
   VideoDetailMo? videoDetailMo;
+  late VideoModel videoModel;
 
   @override
   void initState() {
@@ -36,15 +38,17 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
     // 设置黑色状态栏-Android
     changeStatusBar(color: Colors.black, statusStyle: StatusStyle.LIGHT_CONTENT);
     _controller = TabController(length: tabs.length, vsync: this);
+    videoModel = widget.videoMo;
     loadDetailData();
   }
 
   void loadDetailData() async {
     try {
-      VideoDetailMo result = await VideoDetailDao.get(vid: widget.videoMo.vid!);
+      VideoDetailMo result = await VideoDetailDao.get(vid: videoModel.vid!);
       LogUtil.L(tag, result.toJson().toString());
       setState(() {
         videoDetailMo = result;
+        videoModel = result.videoInfo!;
       });
     } on NeedAuth catch (e) {
       LogUtil.L(tag, e.toString());
@@ -68,34 +72,30 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
       body: MediaQuery.removePadding(
           removeTop: true,
           context: context,
-          child: Column(
-            children: [
-              HiNavigationBar(
-                color: Colors.white,
-                statusStyle: StatusStyle.LIGHT_CONTENT,
-                height: Platform.isAndroid ? 0 : 28,
-                top: 30,
-              ),
-              _buildVideoView(),
-              _buildTabNavigation(),
-              Flexible(
-                  child: TabBarView(
-                controller: _controller,
-                children: [
-                  _buildDetailListPage(),
-                  Text(
-                   "评论",
-                    style: const TextStyle(fontSize: 30, color: Colors.lightBlue),
-                  )
-                ],
-              ))
-            ],
-          )),
+          child: videoModel.url != null
+              ? Column(
+                  children: [
+                    HiNavigationBar(
+                      color: Colors.white,
+                      statusStyle: StatusStyle.LIGHT_CONTENT,
+                      height: Platform.isAndroid ? 0 : 28,
+                      top: 30,
+                    ),
+                    _buildVideoView(),
+                    _buildTabNavigation(),
+                    Flexible(
+                        child: TabBarView(
+                      controller: _controller,
+                      children: [_buildDetailListPage(), const Text(" 开发中...", style: TextStyle(fontSize: 18, color: Colors.lightBlue))],
+                    ))
+                  ],
+                )
+              : Container()),
     );
   }
 
   _buildVideoView() {
-    VideoModel model = widget.videoMo;
+    VideoModel model = videoModel;
     return VideoView(
       url: model.url!,
       cover: model.cover!,
@@ -148,14 +148,12 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
 
   _buildDetailListPage() {
     return ListView(
-      padding: const EdgeInsets.all(0),
       children: [
         ...buildContents(),
         Container(
           height: 500,
-          margin: const EdgeInsets.only(top: 10),
           alignment: Alignment.topLeft,
-          decoration: const BoxDecoration(color: Colors.lightBlue),
+          decoration: const BoxDecoration(color: Colors.white),
           child: Text(videoDetailMo != null ? videoDetailMo!.videoInfo!.desc! : "..."),
         )
       ],
@@ -165,9 +163,28 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   buildContents() {
     return [
       VideoHeader(
-        owner: widget.videoMo.owner!,
+        owner: videoModel.owner!,
       ),
-      ExpandableContent(videoMo: widget.videoMo),
+      ExpandableContent(videoMo: videoModel),
+      VideoToolBar(
+        detailMo: videoDetailMo,
+        videoModel: videoModel,
+        onLike: _onLike,
+        onUnLike: _onUnLike,
+        onCoin: _onCoin,
+        onFavorite: _onFavorite,
+        onShare: _onShare,
+      )
     ];
   }
+
+  void _onLike() {}
+
+  void _onUnLike() {}
+
+  void _onCoin() {}
+
+  void _onFavorite() {}
+
+  void _onShare() {}
 }
