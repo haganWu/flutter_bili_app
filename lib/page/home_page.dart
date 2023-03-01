@@ -103,10 +103,10 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
           isCover: true,
           child: Column(
             children: [
-              HiNavigationBar(height: 36,top: 16, child: _appBar(), color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT),
+              HiNavigationBar(height: 36, top: 16, child: _appBar(), color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT),
               Container(
-                color: Colors.white,
                 child: _tabBar(),
+                decoration:bottomBoxShadow(),
               ),
               // 填充底部剩余空间
               Flexible(
@@ -133,8 +133,11 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
   _tabBar() {
     return HiTab(
         controller: _controller,
+        fontSize: 16,
+        borderWith: 3,
         tabs: categoryList.map<Tab>((tab) {
           return Tab(
+            height: 36,
             child: Padding(
               padding: const EdgeInsets.only(left: 6, right: 6),
               child: Text(
