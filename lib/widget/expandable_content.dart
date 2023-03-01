@@ -75,14 +75,14 @@ class _ExpandableContentState extends State<ExpandableContent> with SingleTicker
     LogUtil.L(tag, '_toggleExpand');
     setState(() {
       _expand = !_expand;
-      if (_expand) {
-        // 执行动画
-        _controller.forward();
-      } else {
-        // 方向执行动画
-        _controller.reverse();
-      }
     });
+    if (_expand) {
+      // 执行动画
+      _controller.forward();
+    } else {
+      // 方向执行动画
+      _controller.reverse();
+    }
   }
 
   _buildInfo() {
@@ -106,7 +106,7 @@ class _ExpandableContentState extends State<ExpandableContent> with SingleTicker
         animation: _controller.view,
         builder: (BuildContext context, Widget? child) {
           return Align(
-            heightFactor: _heightFactor.value,
+            heightFactor: _heightFactor.value,// Align的高度 = child的高度 * heightFactor的值
             // 从布局中上边的位置开始展开
             alignment: Alignment.topCenter,
             child: Container(
