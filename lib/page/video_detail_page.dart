@@ -17,6 +17,8 @@ import '../widget/hi_navigation_bar.dart';
 import '../widget/hi_tab.dart';
 import 'package:flutter_bili_app/http/model/video_detail_mo.dart';
 
+import '../widget/video_large_card.dart';
+
 class VideoDetailPage extends StatefulWidget {
   final VideoModel videoMo;
 
@@ -33,6 +35,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   final String tag = "VideoDetailPage";
   VideoDetailMo? videoDetailMo;
   late VideoModel videoModel;
+  List<VideoModel> videoList = [];
 
   @override
   void initState() {
@@ -51,6 +54,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
       setState(() {
         videoDetailMo = result;
         videoModel = result.videoInfo!;
+        videoList = result.videoList!;
       });
     } on NeedAuth catch (e) {
       LogUtil.L(tag, e.toString());
@@ -81,7 +85,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
                       color: Colors.white,
                       statusStyle: StatusStyle.LIGHT_CONTENT,
                       height: Platform.isAndroid ? 0 : 28,
-                      top: 30,
+                      top: MediaQuery.of(context).padding.top,
                     ),
                     _buildVideoView(),
                     _buildTabNavigation(),
@@ -152,14 +156,13 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
     return ListView(
       children: [
         ...buildContents(),
-        Container(
-          height: 500,
-          alignment: Alignment.topLeft,
-          decoration: const BoxDecoration(color: Colors.white),
-          child: Text(videoDetailMo != null ? videoDetailMo!.videoInfo!.desc! : "..."),
-        )
+        ...buildRelevancyVideoList(),
       ],
     );
+  }
+
+  buildRelevancyVideoList() {
+    return videoList.map((videoMo) => VideoLargeCard(videoModel: videoMo)).toList();
   }
 
   buildContents() {
@@ -216,7 +219,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   void _onFavorite() async {
     try {
       var result = await FavoriteDao.favorite(videoModel.vid!, !videoDetailMo!.isFavorite!);
-          LogUtil.L(tag, result.toString());
+      LogUtil.L(tag, result.toString());
       if (result['code'] == 0) {
         videoDetailMo!.isFavorite = !videoDetailMo!.isFavorite!;
       }

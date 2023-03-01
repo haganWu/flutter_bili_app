@@ -91,9 +91,9 @@ class _ExpandableContentState extends State<ExpandableContent> with SingleTicker
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ...smallIconText(Icons.ondemand_video, widget.videoMo.view!),
+        ...smallIconText(iconData: Icons.ondemand_video, text: widget.videoMo.view!),
         const Padding(padding: EdgeInsets.only(left: 18)),
-        ...smallIconText(Icons.list_alt, widget.videoMo.reply!),
+        ...smallIconText(iconData: Icons.list_alt, text: widget.videoMo.reply!),
         const Padding(padding: EdgeInsets.only(left: 18)),
         Text('$dateStr', style: style),
       ],

@@ -28,13 +28,13 @@ void changeStatusBar({Color color = Colors.white, StatusStyle statusStyle = Stat
   // FlutterStatusbarManager.setStyle(statusStyle == StatusStyle.DARK_CONTENT ? StatusBarStyle.DARK_CONTENT : StatusBarStyle.LIGHT_CONTENT);
 }
 
-smallIconText(IconData iconData, var text) {
-  var style = const TextStyle(fontSize: 12, color: Colors.grey);
+smallIconText({required IconData iconData, required dynamic text, double iconSize = 12, double fontSize = 12, Color color = Colors.grey}) {
+  var style = TextStyle(fontSize: fontSize, color: color);
   if (text is int) {
     text = countMillionFormat(text);
   }
   return [
-    Icon(iconData, color: Colors.grey, size: 12),
+    Icon(iconData, color: Colors.grey, size: iconSize),
     Padding(
       padding: const EdgeInsets.only(left: 2),
       child: Text('$text', style: style),
