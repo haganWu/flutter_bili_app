@@ -22,8 +22,8 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
     super.initState();
     scrollController.addListener(() {
       var dis = scrollController.position.maxScrollExtent - scrollController.position.pixels;
-      // 当距离底部不足200时加载更多
-      if (dis < 300 && !loading) {
+      // 当距离底部不足200时加载更多   列表高度不满屏幕高度时不执行加载更多
+      if (dis < 300 && !loading && scrollController.position.maxScrollExtent != 0) {
         LogUtil.L(tag, "------- LoadMore-------");
         loadData(loadMore: true);
       }
@@ -37,10 +37,7 @@ abstract class HiBaseTabState<M, L, T extends StatefulWidget> extends HiState<T>
     return RefreshIndicator(
       onRefresh: loadData,
       color: primary,
-      child: MediaQuery.removePadding(
-          removeTop: true,
-          context: context,
-          child: contentChild),
+      child: MediaQuery.removePadding(removeTop: true, context: context, child: contentChild),
     );
   }
 
