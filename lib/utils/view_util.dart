@@ -5,8 +5,8 @@ import 'package:flutter_bili_app/widget/hi_navigation_bar.dart';
 
 Widget cachedImage({required String url, double? width, double? height}) {
   return CachedNetworkImage(
-    height: height,
     width: width,
+    height: height,
     fit: BoxFit.cover,
     placeholder: (BuildContext context, String url) => Container(color: Colors.grey[200]),
     errorWidget: (BuildContext context, String url, dynamic error) => const Icon(Icons.error),
