@@ -24,8 +24,10 @@ class _NoticePageState extends HiBaseTabState<NoticeMo, BannerMo, NoticePage> {
 
   _buildNavigationBar() {
     return AppBar(
-      toolbarHeight: 36,
-      title: const Text('通知'),
+      toolbarHeight: 40,
+      title: const Text('通知', style: TextStyle(color: Colors.white)),
+      // backgroundColor: Colors.white,
+      // iconTheme: const IconThemeData(color: Colors.black)
     );
   }
 

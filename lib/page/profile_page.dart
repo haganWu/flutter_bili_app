@@ -3,6 +3,7 @@ import 'package:flutter_bili_app/http/core/hi_net_error.dart';
 import 'package:flutter_bili_app/http/dao/profile_dao.dart';
 import 'package:flutter_bili_app/http/model/profile_mo.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
+import 'package:flutter_bili_app/utils/view_util.dart';
 
 import '../utils/toast.dart';
 
@@ -17,7 +18,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final String tag = "ProfilePage";
 
-  late ProfileMo _profileMo;
+  ProfileMo? _profileMo;
 
   @override
   void initState() {
@@ -28,18 +29,31 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: FractionallySizedBox(
-          heightFactor: 1,
-          widthFactor: 1,
-          child: Container(
-            alignment: Alignment.center,
-            child: const Text(
-              "我的",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 30, color: Colors.red),
-            ),
-          ),
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              // 扩展高度
+              expandedHeight: 160,
+              // 标题栏是否固定
+              pinned: true,
+              backgroundColor: Colors.white,
+              // 定义滚动空间
+              flexibleSpace: FlexibleSpaceBar(
+                titlePadding: const EdgeInsets.only(left: 0),
+                title: _buildHeader(),
+                background: Container(
+                  color: Colors.deepOrange,
+                ),
+              ),
+            )
+          ];
+        },
+        body: ListView.builder(
+          itemCount: 20,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(title: Text('标题：$index', style: const TextStyle(fontSize: 10, color: Colors.grey)));
+          },
         ),
       ),
     );
@@ -59,5 +73,26 @@ class _ProfilePageState extends State<ProfilePage> {
       LogUtil.L(tag, e.toString());
       showErrorToast(e.message);
     }
+  }
+
+  _buildHeader() {
+    if (_profileMo == null) return Container();
+    return Container(
+      alignment: Alignment.bottomLeft,
+      padding: const EdgeInsets.only(bottom: 30, left: 10),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(22),
+            child: cachedImage(url: _profileMo!.face!, width: 44, height: 44),
+          ),
+          hiSpace(width: 6),
+          Text(
+            _profileMo!.name!,
+            style: const TextStyle(fontSize: 12, color: Colors.black54),
+          )
+        ],
+      ),
+    );
   }
 }
