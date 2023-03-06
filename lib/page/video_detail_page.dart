@@ -12,6 +12,7 @@ import 'package:flutter_bili_app/widget/video_tool_bar.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 import '../http/model/video_model.dart';
 import '../utils/LogUtil.dart';
+import '../utils/event_bus_util.dart';
 import '../utils/toast.dart';
 import '../widget/hi_navigation_bar.dart';
 import '../widget/hi_tab.dart';
@@ -84,7 +85,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
                     NavigationBarPlus(
                       color: Colors.black,
                       statusStyle: StatusStyle.LIGHT_CONTENT,
-                      height: Platform.isAndroid ? 0 : 46,
+                      height: Platform.isAndroid ? 0 : 32,
                     ),
                     _buildVideoView(),
                     _buildTabNavigation(),
@@ -221,20 +222,22 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
       LogUtil.L(tag, result.toString());
       if (result['code'] == 0) {
         videoDetailMo!.isFavorite = !videoDetailMo!.isFavorite!;
-      }
-      if (videoDetailMo!.isFavorite!) {
-        videoModel.favorite += 1;
-      } else {
-        videoModel.favorite -= 1;
-        if (videoModel.favorite < 0) {
-          videoModel.favorite = 0;
+        if (videoDetailMo!.isFavorite!) {
+          videoModel.favorite += 1;
+        } else {
+          videoModel.favorite -= 1;
+          if (videoModel.favorite < 0) {
+            videoModel.favorite = 0;
+          }
         }
+        setState(() {
+          videoModel = videoModel;
+          videoDetailMo = videoDetailMo;
+        });
+        showToast(result['msg']);
+        // 发送通知，收藏页面更新数据
+        EventBusUtils.getInstance()?.fire("onReloadFavoriteData");
       }
-      setState(() {
-        videoModel = videoModel;
-        videoDetailMo = videoDetailMo;
-      });
-      showToast(result['msg']);
     } on NeedAuth catch (e) {
       LogUtil.L(tag, e.toString());
       showErrorToast(e.message);

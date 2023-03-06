@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/core/hi_base_tab_state.dart';
 import 'package:flutter_bili_app/http/dao/favorite_dao.dart';
@@ -7,8 +9,7 @@ import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
 
 import '../utils/LogUtil.dart';
-import '../utils/view_util.dart';
-import '../widget/hi_navigation_bar.dart';
+import '../utils/event_bus_util.dart';
 import '../widget/video_large_card.dart';
 
 /// 收藏
@@ -21,40 +22,44 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends HiBaseTabState<FavoriteMo, VideoModel, FavoritePage> {
   late RouteChangeListener listener;
+  StreamSubscription? event;
 
   @override
   void initState() {
     super.initState();
     HiNavigator.getInstance().addListener(listener = (RouteStatusInfo current, RouteStatusInfo? pre) {
-      LogUtil.L("FavoritePage&&&&&&&&", "current:${current.page}, pre:${pre?.page}");
+      LogUtil.L("FavoritePage &&&&&&&&", "current:${current.page}, pre:${pre?.page}");
       if (pre?.page is VideoDetailPage && current.page is FavoritePage) {
+        loadData();
+      }
+    });
+    //通知监听
+    event = EventBusUtils.getInstance()?.on().listen((event) {
+      if(event.toString() == "onReloadFavoriteData"){
+        LogUtil.L("FavoritePage &&&&&&&&", "EventBus 监听");
         loadData();
       }
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [_buildNavigationBar(), Expanded(child: super.build(context))],
-    );
-  }
-
-  _buildNavigationBar() {
-    return NavigationBarPlus(
-      child: Container(
-        decoration: bottomBoxShadow(context),
-        alignment: Alignment.center,
-        child: const Text('收藏', style: TextStyle(fontSize: 16)),
-      ),
-    );
-  }
-
-  @override
   void dispose() {
     HiNavigator.getInstance().removeListener(listener);
+    event?.cancel();
     super.dispose();
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Column(
+  //     children: [_buildNavigationBar(), Expanded(child: super.build(context))],
+  //   );
+  // }
+  //
+  // _buildNavigationBar() {
+  //   return const NavigationBarPlus();
+  // }
+
 
   @override
   get contentChild => ListView.builder(

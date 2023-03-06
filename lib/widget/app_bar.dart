@@ -31,7 +31,7 @@ appBar({required String title, required String rightTitle, bool showLeftBack = t
 
 videoAppBar() {
   return Container(
-    padding: const EdgeInsets.only(right: 8),
+    padding: const EdgeInsets.only(top: 8, right: 8),
     decoration: BoxDecoration(gradient: blackLinearGradient(fromTop: true)),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/provider/theme_provider.dart';
+import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:provider/provider.dart';
 
 import '../constant/color.dart';
@@ -14,7 +15,7 @@ class NavigationBarPlus extends StatefulWidget {
   final double height;
   final Widget? child;
 
-  const NavigationBarPlus({Key? key, this.statusStyle = StatusStyle.DARK_CONTENT, this.color = Colors.white, this.height = 46, this.child})
+  const NavigationBarPlus({Key? key, this.statusStyle = StatusStyle.DARK_CONTENT, this.color = Colors.white, this.height = 32, this.child})
       : super(key: key);
 
   @override
@@ -38,6 +39,7 @@ class _NavigationBarState extends State<NavigationBarPlus> {
     _statusBarInit();
     //状态栏高度
     var top = MediaQuery.of(context).padding.top;
+    LogUtil.L('HiNavigationBar', '状态栏高度 top:${top}');
     return Container(
       width: MediaQuery.of(context).size.width,
       height: top + widget.height,

@@ -13,7 +13,7 @@ class FavoriteListRequest extends BaseRequest {
 
   @override
   String path() {
-    return "/uapi/fa/favorites/";
+    return "/uapi/fa/favorites";
   }
 
 }
