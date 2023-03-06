@@ -78,7 +78,7 @@ class _RankingPageState extends State<RankingPage> with TickerProviderStateMixin
       child: TabBarView(
         controller: _controller,
         children: tabs.map((tab) {
-          return RankingTabPage(tabName: tab['name']);
+          return RankingTabPage(tabName: tab['key']);
         }).toList(),
       ),
     );

@@ -20,6 +20,7 @@ class _RankingTabPageState extends HiBaseTabState<RankingMo, VideoModel, Ranking
   @override
   void initState() {
     super.initState();
+    LogUtil.L('RankingTabPage', 'tabName:${widget.tabName}');
   }
 
   @override
