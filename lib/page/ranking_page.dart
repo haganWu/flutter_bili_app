@@ -51,7 +51,7 @@ class _RankingPageState extends State<RankingPage> with TickerProviderStateMixin
     return Container(
       alignment: Alignment.center,
       child: _tabBar(),
-      decoration: bottomBoxShadow(),
+      decoration: bottomBoxShadow(context),
     );
   }
 

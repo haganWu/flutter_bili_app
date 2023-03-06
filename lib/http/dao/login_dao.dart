@@ -33,12 +33,12 @@ class LoginDao {
     LogUtil.L('loginDao', result.toString());
     if(result["code"] == 0 && result["data"] != null){
       // 保存登录令牌
-      HiCache.getInstall().setString(BOARDING_PASS, result["data"]);
+      HiCache.getInstance().setString(BOARDING_PASS, result["data"]);
     }
     return result;
   }
 
   static String getBoardingPass(){
-    return HiCache.getInstall().get(BOARDING_PASS)??"";
+    return HiCache.getInstance().get(BOARDING_PASS)??"";
   }
 }

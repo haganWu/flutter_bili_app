@@ -1,53 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/utils/view_util.dart';
+import 'package:flutter_bili_app/provider/theme_provider.dart';
+import 'package:provider/provider.dart';
+
+import '../constant/color.dart';
+import '../utils/view_util.dart';
 
 enum StatusStyle { LIGHT_CONTENT, DARK_CONTENT }
 
-/// 自定义沉浸式导航栏
-
-class HiNavigationBar extends StatefulWidget {
+///可自定义样式的沉浸式导航栏
+class NavigationBarPlus extends StatefulWidget {
   final StatusStyle statusStyle;
   final Color color;
   final double height;
-  final double top;
   final Widget? child;
 
-  const HiNavigationBar(
-      {Key? key, this.statusStyle = StatusStyle.DARK_CONTENT, this.color = Colors.white, this.height = 32, this.top = 32, this.child})
+  const NavigationBarPlus({Key? key, this.statusStyle = StatusStyle.DARK_CONTENT, this.color = Colors.white, this.height = 46, this.child})
       : super(key: key);
 
   @override
-  State<HiNavigationBar> createState() => _HiNavigationBarState();
+  State<NavigationBarPlus> createState() => _NavigationBarState();
 }
 
-class _HiNavigationBarState extends State<HiNavigationBar> {
-  @override
-  void initState() {
-    super.initState();
-    _statusBarInit();
-  }
+class _NavigationBarState extends State<NavigationBarPlus> {
+  late StatusStyle _statusStyle;
+  late Color _color;
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = context.watch<ThemeProvider>();
+    if (themeProvider.isDark()) {
+      _color = HiColor.dark_bg;
+      _statusStyle = StatusStyle.LIGHT_CONTENT;
+    } else {
+      _color = widget.color;
+      _statusStyle = widget.statusStyle;
+    }
     _statusBarInit();
-    // 状态栏高度
+    //状态栏高度
     var top = MediaQuery.of(context).padding.top;
     return Container(
-      // 屏幕宽度
       width: MediaQuery.of(context).size.width,
-      height: widget.top + widget.height,
+      height: top + widget.height,
       child: widget.child,
       padding: EdgeInsets.only(top: top),
-      decoration: BoxDecoration(
-        color: widget.color,
-      ),
+      decoration: BoxDecoration(color: _color),
     );
   }
 
   void _statusBarInit() {
-    // 沉浸式状态栏样式 TODO插件不止空安全，已移除
-    // FlutterStatusbarManager.setColor(color, animated: false);
-    // FlutterStatusbarManager.setStyle(statusStyle == StatusStyle.DARK_CONTENT ? StatusBarStyle.DARK_CONTENT : StatusBarStyle.LIGHT_CONTENT);
-    changeStatusBar(color: widget.color, statusStyle: widget.statusStyle);
+    //沉浸式状态栏
+    changeStatusBar(color: _color, statusStyle: _statusStyle);
   }
 }

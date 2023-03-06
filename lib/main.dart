@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/constant/color.dart';
 import 'package:flutter_bili_app/db/hi_cache.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
 import 'package:flutter_bili_app/navigator/bottom_navigator.dart';
 import 'package:flutter_bili_app/page/login_page.dart';
 import 'package:flutter_bili_app/page/registration_page.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
+import 'package:flutter_bili_app/provider/hi_provider.dart';
+import 'package:flutter_bili_app/provider/theme_provider.dart';
 import 'package:flutter_bili_app/utils/toast.dart';
+import 'package:provider/provider.dart';
 import 'http/model/video_model.dart';
 import 'navigator/hi_navigator.dart';
 
@@ -31,10 +33,18 @@ class _BiliAppState extends State<BiliApp> {
         builder: (BuildContext context, AsyncSnapshot<HiCache> snapshot) {
           // 定义router
           var widget = snapshot.connectionState == ConnectionState.done ? Router(routerDelegate: _routeDelegate) : const Scaffold(body: Center(child: CircularProgressIndicator()));
-          return MaterialApp(
-            home: widget,
-            theme: ThemeData(primarySwatch: white),
-          );
+          return MultiProvider(
+              providers: topProviders,
+              child: Consumer<ThemeProvider>(builder: (BuildContext context,
+                  ThemeProvider themeProvider, Widget? child) {
+                return MaterialApp(
+                  home: widget,
+                  theme: themeProvider.getTheme(),
+                  darkTheme: themeProvider.getTheme(isDarkMode: true),
+                  themeMode: themeProvider.getThemeMode(),
+                  title: 'Flutter Bili',
+                );
+              }));
         });
   }
 }

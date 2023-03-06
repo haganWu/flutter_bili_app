@@ -1,12 +1,12 @@
-
-import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HiCache {
   SharedPreferences? prefs;
-  HiCache._(){
+
+  HiCache._() {
     init();
   }
+
   static HiCache? _instance;
 
   /// 构造方法
@@ -22,27 +22,32 @@ class HiCache {
     }
     return _instance!;
   }
-  static HiCache getInstall(){
+
+  static HiCache getInstance() {
     return _instance ??= HiCache._();
   }
 
-  void init() async{
+  void init() async {
     prefs ??= await SharedPreferences.getInstance();
   }
 
-  setString(String key, String value){
+  setString(String key, String value) {
     prefs?.setString(key, value);
   }
-  setDouble(String key, double value){
+
+  setDouble(String key, double value) {
     prefs?.setDouble(key, value);
   }
-  setInt(String key, int value){
+
+  setInt(String key, int value) {
     prefs?.setInt(key, value);
   }
-  setBool(String key, bool value){
+
+  setBool(String key, bool value) {
     prefs?.setBool(key, value);
   }
-  setStringList(String key, List<String> value){
+
+  setStringList(String key, List<String> value) {
     prefs?.setStringList(key, value);
   }
 
@@ -53,5 +58,4 @@ class HiCache {
     }
     return null;
   }
-
 }

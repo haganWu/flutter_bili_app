@@ -81,11 +81,10 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
           child: videoModel.url != null
               ? Column(
                   children: [
-                    HiNavigationBar(
-                      color: Colors.white,
+                    NavigationBarPlus(
+                      color: Colors.black,
                       statusStyle: StatusStyle.LIGHT_CONTENT,
-                      height: Platform.isAndroid ? 0 : 28,
-                      top: MediaQuery.of(context).padding.top,
+                      height: Platform.isAndroid ? 0 : 46,
                     ),
                     _buildVideoView(),
                     _buildTabNavigation(),

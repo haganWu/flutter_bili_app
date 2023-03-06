@@ -25,7 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixin, TickerProviderStateMixin, WidgetsBindingObserver {
   final String tag = "HomePage";
-  RouteChangeListener? listener;
+  late RouteChangeListener listener;
   late TabController _controller;
   List<CategoryMo> categoryList = [];
   List<BannerMo> bannerList = [];
@@ -37,7 +37,7 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _controller = TabController(length: categoryList.length, vsync: this);
-    HiNavigator.getInstance().addListener(listener = (RouterStatusInfo current, RouterStatusInfo? pre) {
+    HiNavigator.getInstance().addListener(listener = (RouteStatusInfo current, RouteStatusInfo? pre) {
       _currentPage = current.page;
       LogUtil.L(tag, "current:${current.page}, pre:${pre?.page}");
       if (widget == current.page || current.page is HomePage) {
@@ -103,10 +103,15 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
           isCover: true,
           child: Column(
             children: [
-              HiNavigationBar(height: 36, top: 16, child: _appBar(), color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT),
+              NavigationBarPlus(
+                height: 50,
+                child: _appBar(),
+                color: Colors.white,
+                statusStyle: StatusStyle.DARK_CONTENT,
+              ),
               Container(
                 child: _tabBar(),
-                decoration:bottomBoxShadow(),
+                decoration: bottomBoxShadow(context),
               ),
               // 填充底部剩余空间
               Flexible(
