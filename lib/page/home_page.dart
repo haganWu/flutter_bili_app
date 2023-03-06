@@ -220,11 +220,16 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
             ),
           )),
           const Icon(Icons.explore_outlined, color: Colors.grey),
-          const Padding(
-            padding: EdgeInsets.only(left: 12),
-            child: Icon(
-              Icons.mail_outline,
-              color: Colors.grey,
+          InkWell(
+            onTap: () {
+              HiNavigator.getInstance().onJumpTo(RouteStatus.notice);
+            },
+            child: const Padding(
+              padding: EdgeInsets.only(left: 12),
+              child: Icon(
+                Icons.mail_outline,
+                color: Colors.grey,
+              ),
             ),
           )
         ],
