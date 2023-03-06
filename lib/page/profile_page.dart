@@ -6,6 +6,7 @@ import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
 
 import '../utils/toast.dart';
+import '../widget/hi_blur.dart';
 
 /// 我的
 class ProfilePage extends StatefulWidget {
@@ -40,10 +41,15 @@ class _ProfilePageState extends State<ProfilePage> {
               backgroundColor: Colors.white,
               // 定义滚动空间
               flexibleSpace: FlexibleSpaceBar(
+                // 时差滚动效果
+                collapseMode: CollapseMode.parallax,
                 titlePadding: const EdgeInsets.only(left: 0),
                 title: _buildHeader(),
-                background: Container(
-                  color: Colors.deepOrange,
+                background: Stack(
+                  children: [
+                    Positioned.fill(child: cachedImage(url: 'http://ww1.sinaimg.cn/large/0065oQSqly1frqscr5o00j30k80qzafc.jpg')),
+                    const Positioned.fill(child: HiBlur(sigma: 6))
+                  ],
                 ),
               ),
             )
@@ -89,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
           hiSpace(width: 6),
           Text(
             _profileMo!.name!,
-            style: const TextStyle(fontSize: 12, color: Colors.black54),
+            style: const TextStyle(fontSize: 12, color: Colors.deepOrange),
           )
         ],
       ),
