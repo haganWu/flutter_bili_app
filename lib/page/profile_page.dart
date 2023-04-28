@@ -8,6 +8,7 @@ import 'package:flutter_bili_app/widget/hi_banner.dart';
 import 'package:flutter_bili_app/widget/hi_flexible_header.dart';
 
 import '../utils/toast.dart';
+import '../widget/course_card.dart';
 import '../widget/hi_blur.dart';
 
 /// 我的
@@ -99,7 +100,12 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
     if (_profileMo == null) {
       return [];
     }
-    return [_buildBanner()];
+    return [
+      _buildBanner(),
+      CourseCard(
+        courseList: _profileMo!.courseList!,
+      )
+    ];
   }
 
   _buildBanner() {
