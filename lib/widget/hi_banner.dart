@@ -11,8 +11,9 @@ class HiBanner extends StatelessWidget {
   final List<BannerMo> bannerList;
   final double bannerHeight;
   final EdgeInsetsGeometry? padding;
+  final double radius;
 
-  const HiBanner({Key? key, required this.bannerList, this.bannerHeight = 160, this.padding}) : super(key: key);
+  const HiBanner({Key? key, required this.bannerList, this.bannerHeight = 160, this.padding,  this.radius = 6}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class HiBanner extends StatelessWidget {
         padding: padding,
         //圆角
         child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(6)),
+          borderRadius: BorderRadius.all(Radius.circular(radius)),
           child: Image.network(
             bannerMo.cover!,
             fit: BoxFit.fill,

@@ -15,7 +15,7 @@ class HiFlexibleHeader extends StatefulWidget {
 }
 
 class _HiFlexibleHeaderState extends State<HiFlexibleHeader> {
-  static const double MAX_BOTTOM = 30.0;
+  static const double MAX_BOTTOM = 40.0;
   static const double MIN_BOTTOM = 10.0;
 
   // 滚动范围
