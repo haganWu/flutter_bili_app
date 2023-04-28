@@ -4,6 +4,7 @@ import 'package:flutter_bili_app/http/dao/profile_dao.dart';
 import 'package:flutter_bili_app/http/model/profile_mo.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
+import 'package:flutter_bili_app/widget/hi_flexible_header.dart';
 
 import '../utils/toast.dart';
 import '../widget/hi_blur.dart';
@@ -18,6 +19,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final String tag = "ProfilePage";
+  final ScrollController _controller = ScrollController();
 
   ProfileMo? _profileMo;
 
@@ -31,6 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
+        controller: _controller,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
@@ -83,22 +86,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   _buildHeader() {
     if (_profileMo == null) return Container();
-    return Container(
-      alignment: Alignment.bottomLeft,
-      padding: const EdgeInsets.only(bottom: 30, left: 10),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(22),
-            child: cachedImage(url: _profileMo!.face!, width: 44, height: 44),
-          ),
-          hiSpace(width: 6),
-          Text(
-            _profileMo!.name!,
-            style: const TextStyle(fontSize: 12, color: Colors.deepOrange),
-          )
-        ],
-      ),
-    );
+    return HiFlexibleHeader(name: _profileMo!.name!, face: _profileMo!.face!, controller: _controller);
   }
 }
