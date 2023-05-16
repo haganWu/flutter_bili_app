@@ -918,12 +918,12 @@ packages:
     source: hosted
     version: "1.0.2"
   web_socket_channel:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: web_socket_channel
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.3.0"
+    version: "2.4.0"
   win32:
     dependency: transitive
     description:
