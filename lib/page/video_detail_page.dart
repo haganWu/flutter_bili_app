@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/barrage/hi_socket.dart';
+import 'package:flutter_bili_app/barrage/hi_barrage.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
 import 'package:flutter_bili_app/http/dao/favorite_dao.dart';
 import 'package:flutter_bili_app/http/dao/like_dao.dart';
@@ -38,7 +38,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   VideoDetailMo? videoDetailMo;
   late VideoModel videoModel;
   List<VideoModel> videoList = [];
-  HiSocket? _hiSocket;
+  final _barrageKey = GlobalKey<HiBarrageState>();
 
   @override
   void initState() {
@@ -47,15 +47,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
     changeStatusBar(color: Colors.black, statusStyle: StatusStyle.LIGHT_CONTENT);
     _controller = TabController(length: tabs.length, vsync: this);
     videoModel = widget.videoMo;
-    _initSocket();
     loadDetailData();
-  }
-
-  void _initSocket() {
-    _hiSocket = HiSocket();
-    _hiSocket?.open(videoModel.vid!).listen((value) {
-      LogUtil.L("VideoDetailPage", " Socket 收到服务端返回:$value");
-    });
   }
 
   void loadDetailData() async {
@@ -80,7 +72,6 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   @override
   void dispose() {
     _controller.dispose();
-    _hiSocket?.close();
     super.dispose();
   }
 
@@ -117,6 +108,11 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
       url: model.url!,
       cover: model.cover!,
       overlayUI: videoAppBar(),
+      barrageUI: HiBarrage(
+        key: _barrageKey,
+        vid: model.vid!,
+        autoPlay: true,
+      ),
     );
   }
 
