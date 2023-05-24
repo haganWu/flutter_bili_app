@@ -18,6 +18,11 @@ class BarrageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Padding(
+      padding: EdgeInsets.only(top: top),
+      child: Container(
+        child: child,
+      ),
+    );
   }
 }
