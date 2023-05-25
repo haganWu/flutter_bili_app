@@ -138,8 +138,10 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
 
   @override
   void send(String message) {
-    _hiSocket.send(message);
-    _handleMessage([BarrageModel(content: message, vid: '-1', priority: 1, type: 1)]);
+    if(message.isNotEmpty) {
+      _hiSocket.send(message);
+      _handleMessage([BarrageModel(content: message, vid: '-1', priority: 1, type: 1)]);
+    }
   }
 
   void _onComplete(id) {

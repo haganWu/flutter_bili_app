@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/barrage/barrage_input.dart';
+import 'package:flutter_bili_app/barrage/barrage_switch.dart';
 import 'package:flutter_bili_app/barrage/hi_barrage.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
 import 'package:flutter_bili_app/http/dao/favorite_dao.dart';
@@ -254,24 +255,27 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   void _onShare() {}
 
   _buildBarrageBtn() {
-    return InkWell(
-      onTap: () {
-        HiOverlay.show(context, child: BarrageInput(onTabClose: () {
+    return BarrageSwitch(
+        inputIsShowing: _inputIsShowing,
+        onShowInput: () {
           setState(() {
-            _inputIsShowing = false;
+            _inputIsShowing = true;
           });
-        })).then((value) {
-          LogUtil.L("VideoDetailPage", "输入框返回内容： $value");
-          _barrageKey.currentState?.send(value ?? "");
+          HiOverlay.show(context, child: BarrageInput(onTabClose: () {
+            setState(() {
+              _inputIsShowing = false;
+            });
+          })).then((value) {
+            LogUtil.L("VideoDetailPage", "输入框返回内容： $value");
+            _barrageKey.currentState?.send(value ?? "");
+          });
+        },
+        onBarrageSwitch: (open) {
+          if (open) {
+            _barrageKey.currentState?.play();
+          } else {
+            _barrageKey.currentState?.pause();
+          }
         });
-      },
-      child: const Padding(
-        padding: EdgeInsets.only(right: 20),
-        child: Icon(
-          Icons.live_tv_rounded,
-          color: Colors.grey,
-        ),
-      ),
-    );
   }
 }
