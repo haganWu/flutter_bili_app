@@ -14,9 +14,10 @@ class BarrageViewUtil {
     return Center(
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(15)
+          border: Border.all(color: Colors.orange),
+          borderRadius: BorderRadius.circular(4)
         ),
+        padding: const EdgeInsets.only(left: 6, right: 6, top: 2, bottom: 2),
         child: Text(model.content!, style: const TextStyle(color: Colors.deepOrangeAccent)),
       ),
     );

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/barrage/barrage_input.dart';
 import 'package:flutter_bili_app/barrage/hi_barrage.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
 import 'package:flutter_bili_app/http/dao/favorite_dao.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_bili_app/widget/expandable_content.dart';
 import 'package:flutter_bili_app/widget/video_header.dart';
 import 'package:flutter_bili_app/widget/video_tool_bar.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
+import 'package:flutter_overlay/flutter_overlay.dart';
 import '../http/model/video_model.dart';
 import '../utils/LogUtil.dart';
 import '../utils/event_bus_util.dart';
@@ -39,6 +41,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   late VideoModel videoModel;
   List<VideoModel> videoList = [];
   final _barrageKey = GlobalKey<HiBarrageState>();
+  bool _inputIsShowing = false;
 
   @override
   void initState() {
@@ -130,13 +133,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _tabBar(),
-            const Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Icon(
-                Icons.live_tv_rounded,
-                color: Colors.grey,
-              ),
-            )
+            _buildBarrageBtn(),
           ],
         ),
       ),
@@ -255,4 +252,26 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   }
 
   void _onShare() {}
+
+  _buildBarrageBtn() {
+    return InkWell(
+      onTap: () {
+        HiOverlay.show(context, child: BarrageInput(onTabClose: () {
+          setState(() {
+            _inputIsShowing = false;
+          });
+        })).then((value) {
+          LogUtil.L("VideoDetailPage", "输入框返回内容： $value");
+          _barrageKey.currentState?.send(value ?? "");
+        });
+      },
+      child: const Padding(
+        padding: EdgeInsets.only(right: 20),
+        child: Icon(
+          Icons.live_tv_rounded,
+          color: Colors.grey,
+        ),
+      ),
+    );
+  }
 }
