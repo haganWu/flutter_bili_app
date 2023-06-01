@@ -14,7 +14,9 @@ import 'package:flutter_bili_app/widget/video_header.dart';
 import 'package:flutter_bili_app/widget/video_tool_bar.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 import 'package:flutter_overlay/flutter_overlay.dart';
+import 'package:provider/provider.dart';
 import '../http/model/video_model.dart';
+import '../provider/theme_provider.dart';
 import '../utils/LogUtil.dart';
 import '../utils/event_bus_util.dart';
 import '../utils/toast.dart';
@@ -121,15 +123,22 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
   }
 
   _buildTabNavigation() {
+    var themeProvider = context.watch<ThemeProvider>();
+    Color? shadowColor = Colors.grey[100];
+    Color? bgColor = Colors.white;
+    if (themeProvider.isDark()) {
+      shadowColor = Colors.grey[700];
+      bgColor = Colors.black54;
+    }
     // 设置阴影效果
     return Material(
       elevation: 6,
-      shadowColor: Colors.grey[100],
+      shadowColor: shadowColor,
       child: Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: 20),
         height: 36,
-        color: Colors.white,
+        color: bgColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

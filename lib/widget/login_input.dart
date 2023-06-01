@@ -83,7 +83,7 @@ class _LoginInputState extends State<LoginInput> {
         keyboardType: widget.keyboardType,
         autofocus: false,//!widget.obscureText,
         cursorColor: primary,
-        style: const TextStyle(fontSize: 16,color: Colors.black, fontWeight: FontWeight.w300),
+        style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w300),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(left: 12, right: 12),
           border: InputBorder.none,

@@ -64,7 +64,7 @@ class VideoLargeCard extends StatelessWidget {
             videoModel.title!,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: Colors.black87, fontSize: 14),
+            style: const TextStyle(fontSize: 14),
           ),
           Column(
 

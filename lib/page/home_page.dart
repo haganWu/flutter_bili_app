@@ -83,7 +83,7 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
       case AppLifecycleState.resumed:
         LogUtil.L(tag, '生命周期方法 -  重新激活');
         if (_currentPage is! VideoDetailPage) {
-          changeStatusBar(color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT);
+          changeStatusBar(color: Colors.white, statusStyle: StatusStyle.DARK_CONTENT, context: context);
         }
         break;
       // APP结束

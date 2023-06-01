@@ -79,7 +79,6 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
       expandedHeight: 160,
       // 标题栏是否固定
       pinned: true,
-      backgroundColor: Colors.white,
       // 定义滚动空间
       flexibleSpace: FlexibleSpaceBar(
         // 时差滚动效果
@@ -101,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
     if (_profileMo == null) {
       return [];
     }
-    return [_buildBanner(), CourseCard(courseList: _profileMo!.courseList!), BenefitCard(benefitList: _profileMo!.benefitList!)];
+    return [_buildBanner(), CourseCard(courseList: _profileMo!.courseList!), BenefitCard(benefitList: _profileMo!.benefitList!), _buildThemeItem()];
   }
 
   _buildBanner() {
@@ -142,5 +141,9 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
         ),
       ],
     );
+  }
+
+  _buildThemeItem() {
+    return const Text("修改主题", style: TextStyle(fontSize: 16, color: Colors.deepOrangeAccent));
   }
 }

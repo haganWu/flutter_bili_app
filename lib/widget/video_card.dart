@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
+import 'package:provider/provider.dart';
 
 import '../http/model/video_model.dart';
+import '../provider/theme_provider.dart';
 import '../utils/format_util.dart';
 import '../utils/view_util.dart';
 
@@ -15,6 +17,8 @@ class VideoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = context.watch<ThemeProvider>();
+    Color textColor = themeProvider.isDark() ? Colors.white70 : Colors.black87;
     return InkWell(
       onTap: () {
         LogUtil.L(tag, "url:${videoMo.url}");
@@ -31,7 +35,7 @@ class VideoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _itemImage(MediaQuery.of(context).size),
-                _infoText(),
+                _infoText(textColor),
               ],
             ),
           ),
@@ -95,7 +99,7 @@ class VideoCard extends StatelessWidget {
     );
   }
 
-  _infoText() {
+  _infoText(Color textColor) {
     return Expanded(
         child: Container(
       padding: const EdgeInsets.only(left: 6, right: 6, bottom: 4, top: 4),
@@ -109,15 +113,15 @@ class VideoCard extends StatelessWidget {
             videoMo.title!,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 12, color: Colors.black),
+            style: TextStyle(fontSize: 12, color: textColor),
           ),
-          _owner()
+          _owner(textColor)
         ],
       ),
     ));
   }
 
-  _owner() {
+  _owner(Color textColor) {
     var owner = videoMo.owner;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,7 +140,7 @@ class VideoCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8),
               child: Text(
                 owner?.name ?? "",
-                style: const TextStyle(fontSize: 12, color: Colors.black),
+                style: TextStyle(fontSize: 12, color: textColor),
               ),
             )
           ],
