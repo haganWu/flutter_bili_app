@@ -10,6 +10,7 @@ import 'package:flutter_bili_app/widget/hi_flexible_header.dart';
 import '../utils/toast.dart';
 import '../widget/benefit_card.dart';
 import '../widget/course_card.dart';
+import '../widget/dark_mode_item.dart';
 import '../widget/hi_blur.dart';
 
 /// 我的
@@ -144,6 +145,6 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
   }
 
   _buildThemeItem() {
-    return const Text("修改主题", style: TextStyle(fontSize: 16, color: Colors.deepOrangeAccent));
+    return const DarkModeItem();
   }
 }

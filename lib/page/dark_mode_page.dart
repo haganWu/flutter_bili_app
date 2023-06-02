@@ -51,7 +51,9 @@ class _DarkModePageState extends State<DarkModePage> {
         _switchTheme(index);
       },
       child: Container(
+        // 垂直居左
         alignment: Alignment.centerLeft,
+        // 横向padding，左右padding 16 类似paddingHorizontal
         padding: const EdgeInsets.symmetric(horizontal: 16),
         height: 50,
         child: Row(
