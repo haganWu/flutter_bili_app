@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/core/hi_state.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
@@ -228,7 +230,12 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
               ),
             ),
           )),
-          const Icon(Icons.explore_outlined, color: Colors.grey),
+          InkWell(
+            onTap: () {
+              _mockCrash();
+            },
+            child: const Icon(Icons.explore_outlined, color: Colors.grey),
+          ),
           InkWell(
             onTap: () {
               HiNavigator.getInstance().onJumpTo(RouteStatus.notice);
@@ -244,5 +251,49 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
         ],
       ),
     );
+  }
+
+  /// 模拟crash
+  void _mockCrash() async {
+    /// 同步异常
+    // 直接抛出异常
+    throw StateError('Now appear a dart exception');
+
+    // try catch 捕获异常
+    // try {
+    //   throw StateError('Now appear a dart exception');
+    // } catch(e) {
+    //   LogUtil.L("crash-exception", e.toString());
+    // }
+
+    /// 异步异常
+    // 一
+    // Future.delayed(const Duration(seconds: 1))
+    //     .then((e) => throw StateError('Now appear a dart exception'))
+    //     .catchError((e) => LogUtil.L('crash-exception', e.toString()));
+
+    // 二
+    // try {
+    //   await Future.delayed(const Duration(seconds: 3))
+    //       .then((e) => throw StateError('Now appear a dart exception$);
+    // } catch (e) {
+    //   LogUtil.L("crash-exception", e.toString());
+    // }
+
+    /// 集中捕获异常
+    // 集中捕获同步异常
+    // runZonedGuarded(() {
+    //   throw StateError('Now appear a dart exception');
+    // }, (error, stack) {
+    //   LogUtil.L('crash-exception', 'error:${error.toString()}, stack:$stack');
+    // });
+
+    // 集中捕获异步异常
+    // runZonedGuarded(() {
+    //   Future.delayed(const Duration(seconds: 3))
+    //       .then((value) => throw StateError('Now appear a dart exception'));
+    // }, (error, stack) {
+    //   LogUtil.L('crash-exception', 'error:${error.toString()}, stack:$stack');
+    // });
   }
 }
