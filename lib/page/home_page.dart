@@ -7,12 +7,14 @@ import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/page/home_tab_page.dart';
 import 'package:flutter_bili_app/page/profile_page.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
+import 'package:flutter_bili_app/provider/theme_provider.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_bili_app/utils/toast.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
 import 'package:flutter_bili_app/widget/hi_navigation_bar.dart';
 import 'package:flutter_bili_app/widget/hi_tab.dart';
 import 'package:flutter_bili_app/widget/loading_container.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   final ValueChanged<int>? onJumpTo;
@@ -63,6 +65,13 @@ class _HomePageState extends HiState<HomePage> with AutomaticKeepAliveClientMixi
     HiNavigator.getInstance().removeListener(listener);
     _controller.dispose();
     super.dispose();
+  }
+
+  /// 监听系统Dark Mode变化
+  @override
+  void didChangePlatformBrightness() {
+    context.read<ThemeProvider>().darModeChange();
+    super.didChangePlatformBrightness();
   }
 
   // 监听应用生命周期方法
