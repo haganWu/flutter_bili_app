@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
 
-appBar({required String title, required String rightTitle, bool showLeftBack = true, VoidCallback? rightButtonClick}) {
+appBar({required String title, required String rightTitle, bool showLeftBack = true, VoidCallback? rightButtonClick, Key? key}) {
   return AppBar(
     // 标题居左
     centerTitle: false,
@@ -14,6 +14,7 @@ appBar({required String title, required String rightTitle, bool showLeftBack = t
     ),
     actions: [
       InkWell(
+        key: key,
         onTap: rightButtonClick,
         child: Container(
           padding: const EdgeInsets.only(left: 16, right: 16),

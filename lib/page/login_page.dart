@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
           rightButtonClick: () {
             HiNavigator.getInstance()
                 .onJumpTo(RouteStatus.registration, args: {});
-          }),
+          },key: const Key('registration')),
       body: ListView(
         children: [
           LoginEffect(protect: protect),
