@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/barrage/barrage_transition.dart';
+
+import 'barrage_transition.dart';
 
 class BarrageItem extends StatelessWidget {
   final String id;

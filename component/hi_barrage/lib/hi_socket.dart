@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/http/dao/login_dao.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
-import 'package:flutter_bili_app/utils/hi_constants.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'LogUtil.dart';
+import 'barrage_model.dart';
 
-import '../http/model/barrage_model.dart';
 
 /// 与后端webSocket通信
 class HiSocket implements ISocket {
+  Map<String, dynamic> headers;
   static const _URL = "wss://api.devio.org/uapi/fa/barrage/";
   WebSocketChannel? _channel;
   ValueChanged<List<BarrageModel>>? _callBack;
   final int _intervalSeconds = 50;
 
+
+  HiSocket(this.headers);
+
   @override
   ISocket open(String vid) {
-    _channel = IOWebSocketChannel.connect(_URL + vid, headers: _headers(), pingInterval: Duration(seconds: _intervalSeconds));
+    _channel = IOWebSocketChannel.connect(_URL + vid, headers: headers, pingInterval: Duration(seconds: _intervalSeconds));
     _channel?.stream.handleError((error) {
       LogUtil.L("HiSocket", "链接发生错误:$error");
     }).listen((message) {
@@ -32,13 +34,6 @@ class HiSocket implements ISocket {
     if(_callBack != null){
       _callBack!(result);
     }
-  }
-
-  /// 设置请求头校验
-  _headers() {
-    Map<String, dynamic> header = {HiConstants.authTokenK: HiConstants.authTokenV, HiConstants.courseFlagK: HiConstants.courseFlagV};
-    header[LoginDao.BOARDING_PASS] = LoginDao.getBoardingPass();
-    return header;
   }
 
   @override

@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/barrage/barrage_input.dart';
-import 'package:flutter_bili_app/barrage/barrage_switch.dart';
-import 'package:flutter_bili_app/barrage/hi_barrage.dart';
+import 'package:flutter_bili_app/utils/hi_constants.dart';
+import 'package:flutter_bili_app/widget/barrage_switch.dart';
 import 'package:flutter_bili_app/http/dao/favorite_dao.dart';
 import 'package:flutter_bili_app/http/dao/like_dao.dart';
 import 'package:flutter_bili_app/http/dao/video_detail_dao.dart';
@@ -13,6 +13,7 @@ import 'package:flutter_bili_app/widget/video_header.dart';
 import 'package:flutter_bili_app/widget/video_tool_bar.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 import 'package:flutter_overlay/flutter_overlay.dart';
+import 'package:hi_barrage/hi_barrage.dart';
 import 'package:hi_net/core/hi_net_error.dart';
 import 'package:provider/provider.dart';
 import '../http/model/video_model.dart';
@@ -23,7 +24,6 @@ import '../utils/toast.dart';
 import '../widget/hi_navigation_bar.dart';
 import '../widget/hi_tab.dart';
 import 'package:flutter_bili_app/http/model/video_detail_mo.dart';
-
 import '../widget/video_large_card.dart';
 
 class VideoDetailPage extends StatefulWidget {
@@ -118,6 +118,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSt
         key: _barrageKey,
         vid: model.vid!,
         autoPlay: true,
+        headers: HiConstants.headers(),
       ),
     );
   }

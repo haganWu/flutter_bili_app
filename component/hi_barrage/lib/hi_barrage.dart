@@ -2,13 +2,12 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/barrage/barrage_view_util.dart';
-import 'package:flutter_bili_app/barrage/hi_socket.dart';
-import 'package:flutter_bili_app/barrage/ibarrage.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
-
-import '../http/model/barrage_model.dart';
+import 'LogUtil.dart';
 import 'barrage_item.dart';
+import 'barrage_model.dart';
+import 'barrage_view_util.dart';
+import 'hi_socket.dart';
+import 'ibarrage.dart';
 
 enum BarrageStatus { play, pause }
 
@@ -18,8 +17,10 @@ class HiBarrage extends StatefulWidget {
   final int speed;
   final double top;
   final bool autoPlay;
+  final Map<String, dynamic> headers;
 
-  const HiBarrage({Key? key, this.lineCount = 4, required this.vid, this.speed = 800, this.top = 0, this.autoPlay = false}) : super(key: key);
+  const HiBarrage({Key? key, this.lineCount = 4, required this.vid, this.speed = 800, this.top = 0, this.autoPlay = false, required this.headers})
+      : super(key: key);
 
   @override
   State<HiBarrage> createState() => HiBarrageState();
@@ -45,7 +46,7 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
   @override
   void initState() {
     super.initState();
-    _hiSocket = HiSocket();
+    _hiSocket = HiSocket(widget.headers);
     _hiSocket.open(widget.vid).listen((value) {
       _handleMessage(value);
     });
@@ -105,8 +106,7 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
     String id = "${_random.nextInt(10000)}:${model.content}";
     var item = BarrageItem(id: id, top: top, child: BarrageViewUtil.barrageView(model), onComplete: _onComplete);
     _barrageItemList.add(item);
-    setState((){
-    });
+    setState(() {});
   }
 
   @override
@@ -120,7 +120,6 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
         children: [
           // 防止Stack的child为空
           Container(), ..._barrageItemList,
-
         ],
       ),
     );
@@ -138,14 +137,14 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage {
 
   @override
   void send(String message) {
-    if(message.isNotEmpty) {
+    if (message.isNotEmpty) {
       _hiSocket.send(message);
       _handleMessage([BarrageModel(content: message, vid: '-1', priority: 1, type: 1)]);
     }
   }
 
   void _onComplete(id) {
-    LogUtil.L("HiBarrage","Done: $id");
+    LogUtil.L("HiBarrage", "Done: $id");
     _barrageItemList.removeWhere((element) => element.id == id);
   }
 }

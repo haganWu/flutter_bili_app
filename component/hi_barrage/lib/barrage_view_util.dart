@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/http/model/barrage_model.dart';
+import 'barrage_model.dart';
 
 class BarrageViewUtil {
   static barrageView(BarrageModel model) {
