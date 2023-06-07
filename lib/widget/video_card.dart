@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
+import 'package:hi_base/format_util.dart';
 import 'package:provider/provider.dart';
-
 import '../http/model/video_model.dart';
 import '../provider/theme_provider.dart';
-import '../utils/format_util.dart';
-import '../utils/view_util.dart';
+import 'package:hi_base/view_util.dart';
 
 class VideoCard extends StatelessWidget {
   final String tag = 'VideoCard';

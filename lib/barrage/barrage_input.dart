@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/constant/color.dart';
-import 'package:flutter_bili_app/utils/view_util.dart';
+import 'package:hi_base/color.dart';
+import 'package:hi_base/view_util.dart';
 
 /// 弹幕输入界面
 class BarrageInput extends StatelessWidget {

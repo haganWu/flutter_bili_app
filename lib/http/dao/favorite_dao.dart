@@ -2,8 +2,8 @@ import 'package:flutter_bili_app/http/model/favorite_mo.dart';
 import 'package:flutter_bili_app/http/request/base_request.dart';
 import 'package:flutter_bili_app/http/request/cancel_favorite_request.dart';
 import 'package:flutter_bili_app/http/request/favorite_request.dart';
+import 'package:hi_base/LogUtil.dart';
 import 'package:hi_net/hi_net.dart';
-import '../../utils/LogUtil.dart';
 import '../request/favorite_list_request.dart';
 
 

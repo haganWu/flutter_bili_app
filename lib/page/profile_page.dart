@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/dao/profile_dao.dart';
 import 'package:flutter_bili_app/http/model/profile_mo.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
-import 'package:flutter_bili_app/utils/view_util.dart';
+import 'package:hi_base/LogUtil.dart';
 import 'package:flutter_bili_app/widget/hi_banner.dart';
 import 'package:flutter_bili_app/widget/hi_flexible_header.dart';
 import 'package:hi_net/core/hi_net_error.dart';
-
-import '../utils/toast.dart';
+import 'package:hi_base/toast.dart';
 import '../widget/benefit_card.dart';
 import '../widget/course_card.dart';
 import '../widget/dark_mode_item.dart';
 import '../widget/hi_blur.dart';
+import 'package:hi_base/view_util.dart';
 
 /// 我的
 class ProfilePage extends StatefulWidget {

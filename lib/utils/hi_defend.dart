@@ -1,8 +1,7 @@
 import 'dart:async';
-
+import 'package:hi_base/LogUtil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
 
 /// 异常处理
 class HiDefend {

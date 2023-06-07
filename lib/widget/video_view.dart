@@ -1,8 +1,8 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bili_app/constant/color.dart';
-import 'package:flutter_bili_app/utils/view_util.dart';
+import 'package:hi_base/color.dart';
+import 'package:hi_base/view_util.dart';
 import 'package:flutter_bili_app/widget/hi_video_controls.dart';
 import 'package:orientation/orientation.dart';
 import 'package:video_player/video_player.dart';

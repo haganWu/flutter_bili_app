@@ -7,7 +7,8 @@ import 'package:chewie/src/helpers/utils.dart';
 import 'package:chewie/src/models/subtitle_model.dart';
 import 'package:chewie/src/notifiers/index.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/constant/color.dart';
+import 'package:hi_base/color.dart';
+import 'package:hi_base/LogUtil.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -357,7 +358,7 @@ class _HiVideoControlsState extends State<HiVideoControls>
   void _onExpandCollapse() {
     Size size = chewieController.videoPlayerController.value.size;
     if (size == null || size.width == 0.0) {
-      print('_onExpandCollapse:videoPlayerController.value.size is null.');
+      LogUtil.L("VideoControls", '_onExpandCollapse:videoPlayerController.value.size is null.');
       return;
     }
     setState(() {

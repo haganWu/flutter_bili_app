@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:underline_indicator/underline_indicator.dart';
-import '../constant/color.dart';
+import 'package:hi_base/color.dart';
 
 /// 顶部Tab组件
 class HiTab extends StatelessWidget {

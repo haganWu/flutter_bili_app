@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
-import 'package:flutter_bili_app/utils/toast.dart';
+import 'package:hi_base/toast.dart';
 import 'package:flutter_bili_app/widget/app_bar.dart';
 import 'package:flutter_bili_app/widget/login_button.dart';
-
 import '../navigator/hi_navigator.dart';
-import '../utils/LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
 import '../widget/login_effect.dart';
 import '../widget/login_input.dart';
 

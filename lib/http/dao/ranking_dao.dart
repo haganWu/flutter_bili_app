@@ -1,6 +1,6 @@
 import 'package:flutter_bili_app/http/request/ranking_request.dart';
 import 'package:hi_net/hi_net.dart';
-import '../../utils/LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
 import '../model/ranking_mo.dart';
 
 class RankingDao {

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
-import 'package:flutter_bili_app/utils/toast.dart';
+import 'package:hi_base/LogUtil.dart';
+import 'package:hi_base/toast.dart';
 import 'package:flutter_bili_app/widget/app_bar.dart';
 import 'package:flutter_bili_app/widget/login_effect.dart';
 import 'package:flutter_bili_app/widget/login_input.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../widget/login_button.dart';
 
 class RegistrationPage extends StatefulWidget {

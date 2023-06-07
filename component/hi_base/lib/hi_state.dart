@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
 
 /// 页面状态异常管理
 abstract class HiState<T extends StatefulWidget> extends State<T> {

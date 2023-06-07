@@ -1,3 +1,4 @@
+import 'package:hi_base/LogUtil.dart';
 import 'package:hi_net/request/hi_base_request.dart';
 import 'core/dio_adapter.dart';
 import 'core/hi_net_adapter.dart';
@@ -23,13 +24,13 @@ class HiNet {
       response = e.data;
     } catch(e) {
       error = e;
-      print("$tag -- ${e.toString()}");
+      LogUtil.L(tag,e.toString());
     }
     if(response == null){
-      print("$tag -- ${error.toString()}");
+      LogUtil.L(tag,error.toString());
     }
     var result = response?.data;
-    print("$tag -- result: $result");
+    LogUtil.L(tag,"result: $result");
 
     int? status = response?.statusCode??-1;
     switch(status){
@@ -46,7 +47,7 @@ class HiNet {
   }
 
   Future<dynamic> send<T>(HiBaseRequest request) async{
-    print("$tag -- url: ${request.url()}");
+    LogUtil.L(tag,"url: ${request.url()}");
     HiNetAdapter adapter = DioAdapter();
     return adapter.send(request);
   }

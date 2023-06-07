@@ -12,7 +12,7 @@ import 'package:flutter_bili_app/page/video_detail_page.dart';
 import 'package:flutter_bili_app/provider/hi_provider.dart';
 import 'package:flutter_bili_app/provider/theme_provider.dart';
 import 'package:flutter_bili_app/utils/hi_defend.dart';
-import 'package:flutter_bili_app/utils/toast.dart';
+import 'package:hi_base/toast.dart';
 import 'package:provider/provider.dart';
 import 'http/model/video_model.dart';
 import 'navigator/hi_navigator.dart';

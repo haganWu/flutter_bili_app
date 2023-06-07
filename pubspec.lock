@@ -348,6 +348,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  hi_base:
+    dependency: "direct main"
+    description:
+      path: "component/hi_base"
+      relative: true
+    source: path
+    version: "0.0.1"
   hi_net:
     dependency: "direct main"
     description:
@@ -389,7 +396,7 @@ packages:
     source: sdk
     version: "0.0.0"
   intl:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: intl
       url: "https://pub.flutter-io.cn"

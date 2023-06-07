@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/provider/theme_provider.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
 import 'package:provider/provider.dart';
-
-import '../constant/color.dart';
+import 'package:hi_base/color.dart';
 import '../utils/view_util.dart';
 
 enum StatusStyle { LIGHT_CONTENT, DARK_CONTENT }

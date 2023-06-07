@@ -1,65 +1,23 @@
 import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bili_app/utils/format_util.dart';
 import 'package:flutter_bili_app/widget/hi_navigation_bar.dart';
 import 'package:provider/provider.dart';
-
-import '../constant/color.dart';
+import 'package:hi_base/color.dart';
 import '../navigator/hi_navigator.dart';
 import '../page/profile_page.dart';
 import '../page/video_detail_page.dart';
 import '../provider/theme_provider.dart';
 
-Widget cachedImage({required String url, double? width, double? height}) {
-  return CachedNetworkImage(
-    width: width,
-    height: height,
-    fit: BoxFit.cover,
-    placeholder: (BuildContext context, String url) => Container(color: Colors.grey[200]),
-    errorWidget: (BuildContext context, String url, dynamic error) => const Icon(Icons.error),
-    imageUrl: url,
-  );
-}
-
-///黑色线性渐变
-blackLinearGradient({bool fromTop = false}) {
-  return LinearGradient(
-      begin: fromTop ? Alignment.topCenter : Alignment.bottomCenter,
-      end: fromTop ? Alignment.bottomCenter : Alignment.topCenter,
-      colors: const [Colors.black54, Colors.black45, Colors.black38, Colors.black26, Colors.black12, Colors.transparent]);
-}
-
-smallIconText({required IconData iconData, required dynamic text, double iconSize = 12, double fontSize = 12, Color color = Colors.grey}) {
-  var style = TextStyle(fontSize: fontSize, color: color);
-  if (text is int) {
-    text = countMillionFormat(text);
-  }
-  return [
-    Icon(iconData, color: Colors.grey, size: iconSize),
-    Padding(
-      padding: const EdgeInsets.only(left: 2),
-      child: Text('$text', style: style),
-    ),
-  ];
-}
 
 /// 分割线
 borderLine({required BuildContext context, bool bottom = true, bool top = false}) {
-  BorderSide borderSide = const BorderSide(width: 0.5, color: Color(0xFFEEEEEE));
+  var themeProvider = context.watch<ThemeProvider>();
+  Color? lineColor = themeProvider.isDark() ? Colors.grey : Colors.grey[200];
+  BorderSide borderSide = BorderSide(width: 0.5, color: lineColor!);
   return Border(
     bottom: bottom ? borderSide : BorderSide.none,
     top: top ? borderSide : BorderSide.none,
-  );
-}
-
-/// 间距
-SizedBox hiSpace({double width = 1, double height = 1}) {
-  return SizedBox(
-    width: width,
-    height: height,
   );
 }
 
@@ -72,7 +30,7 @@ BoxDecoration? bottomBoxShadow(BuildContext context) {
   return BoxDecoration(color: Colors.white, boxShadow: [
     BoxShadow(
         color: Colors.grey[100]!,
-        offset: Offset(0, 5), //xy轴偏移
+        offset: const Offset(0, 5), //xy轴偏移
         blurRadius: 5.0, //阴影模糊程度
         spreadRadius: 1 //阴影扩散程度
     )

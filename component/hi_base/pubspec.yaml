@@ -1,5 +1,5 @@
-name: hi_net
-description: 网络层框架
+name: hi_base
+description: 基础组件
 version: 0.0.1
 homepage:
 
@@ -10,10 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  hi_base:
-    path: ../../component/hi_base
 
-  dio: ^4.0.6
+  intl: ^0.18.0
+  cached_network_image: ^3.0.0-nullsafety
+  fluttertoast: ^8.1.2
 
 dev_dependencies:
   flutter_test:

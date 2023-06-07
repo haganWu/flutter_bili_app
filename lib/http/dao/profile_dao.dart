@@ -1,7 +1,7 @@
 import 'package:flutter_bili_app/http/model/profile_mo.dart';
 import 'package:flutter_bili_app/http/request/profile_request.dart';
 import 'package:hi_net/hi_net.dart';
-import '../../utils/LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
 
 class ProfileDao {
   static get() async {

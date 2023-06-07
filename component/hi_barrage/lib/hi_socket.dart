@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hi_base/LogUtil.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'LogUtil.dart';
 import 'barrage_model.dart';
 
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/core/hi_base_tab_state.dart';
 import 'package:flutter_bili_app/http/model/home_mo.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
 import 'package:flutter_bili_app/widget/hi_banner.dart';
 import 'package:flutter_bili_app/widget/video_card.dart';
 import 'package:flutter_nested/flutter_nested.dart';

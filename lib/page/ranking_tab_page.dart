@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/dao/ranking_dao.dart';
 import 'package:flutter_bili_app/http/model/ranking_mo.dart';
 import 'package:flutter_bili_app/http/model/video_model.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
-
+import 'package:hi_base/LogUtil.dart';
 import '../core/hi_base_tab_state.dart';
 import '../widget/video_large_card.dart';
 

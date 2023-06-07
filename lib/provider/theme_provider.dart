@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
-import '../constant/color.dart';
+import 'package:hi_base/color.dart';
 import '../db/hi_cache.dart';
 import '../utils/hi_constants.dart';
 

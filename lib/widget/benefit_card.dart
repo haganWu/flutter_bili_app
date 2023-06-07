@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/utils/view_util.dart';
+import 'package:hi_base/view_util.dart';
 import 'package:flutter_bili_app/widget/hi_blur.dart';
 
 import '../http/model/profile_mo.dart';

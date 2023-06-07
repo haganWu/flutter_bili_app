@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/constant/color.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
-import 'package:flutter_bili_app/utils/format_util.dart';
+import 'package:hi_base/color.dart';
+import 'package:hi_base/LogUtil.dart';
+import 'package:hi_base/format_util.dart';
 import '../http/model/video_model.dart';
 
 

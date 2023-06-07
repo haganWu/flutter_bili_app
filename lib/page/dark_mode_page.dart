@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
-
-import '../constant/color.dart';
+import 'package:hi_base/color.dart';
 
 ///夜间模式页面
 class DarkModePage extends StatefulWidget {

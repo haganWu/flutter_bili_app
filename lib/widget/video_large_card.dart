@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/model/video_model.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
-import 'package:flutter_bili_app/utils/format_util.dart';
-import 'package:flutter_bili_app/utils/view_util.dart';
+import 'package:hi_base/view_util.dart';
+import 'package:hi_base/format_util.dart';
 
 /// 关联视频，视频列表卡片
 class VideoLargeCard extends StatelessWidget {

@@ -34,6 +34,8 @@ dependencies:
     path: ./component/hi_net
   hi_barrage:
     path: ./component/hi_barrage
+  hi_base:
+    path: ./component/hi_base
 
 
 
@@ -42,12 +44,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   json_serializable: ^6.5.4
   shared_preferences: ^2.0.15
-  fluttertoast: ^8.1.2
   underline_indicator: ^0.0.2
   flutter_swiper_null_safety: ^1.0.2
   flutter_nested: ^1.0.0
   transparent_image: ^2.0.0
-  cached_network_image: ^3.0.0-nullsafety
   lottie: ^1.0.1
   chewie: ^1.4.0
   video_player: ^2.5.1
@@ -56,7 +56,6 @@ dependencies:
   flutter_overlay: ^1.0.0
   provider: ^6.0.3
   event_bus: ^2.0.0
-  intl: ^0.18.0
 
 
 #解决依赖冲突

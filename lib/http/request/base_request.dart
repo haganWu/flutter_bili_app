@@ -1,6 +1,5 @@
 import 'package:hi_net/request/hi_base_request.dart';
-
-import '../../utils/LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
 import '../../utils/hi_constants.dart';
 import '../dao/login_dao.dart';
 

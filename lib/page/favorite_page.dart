@@ -7,8 +7,7 @@ import 'package:flutter_bili_app/http/model/favorite_mo.dart';
 import 'package:flutter_bili_app/http/model/video_model.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
-
-import '../utils/LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
 import '../utils/event_bus_util.dart';
 import '../widget/video_large_card.dart';
 

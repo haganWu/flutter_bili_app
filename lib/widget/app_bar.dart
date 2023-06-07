@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/utils/view_util.dart';
+import 'package:hi_base/view_util.dart';
 
 appBar({required String title, required String rightTitle, bool showLeftBack = true, VoidCallback? rightButtonClick, Key? key}) {
   return AppBar(

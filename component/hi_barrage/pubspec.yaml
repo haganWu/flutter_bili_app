@@ -9,6 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  hi_base:
+    path: ../../component/hi_base
+
   web_socket_channel: ^2.2.0
 
 dev_dependencies:

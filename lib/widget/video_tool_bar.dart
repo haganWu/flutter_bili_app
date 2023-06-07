@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/constant/color.dart';
+import 'package:hi_base/color.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
-
+import 'package:hi_base/format_util.dart';
+import 'package:hi_base/view_util.dart';
 import '../http/model/video_detail_mo.dart';
 import '../http/model/video_model.dart';
-import '../utils/format_util.dart';
 
 /// 视频点赞分享等工具栏
 class VideoToolBar extends StatelessWidget {

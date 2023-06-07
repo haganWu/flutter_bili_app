@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/constant/color.dart';
-import 'package:flutter_bili_app/core/hi_state.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:hi_net/core/hi_net_error.dart';
-import '../utils/toast.dart';
+import 'package:hi_base/LogUtil.dart';
+import 'package:hi_base/toast.dart';
+import 'package:hi_base/hi_state.dart';
+import 'package:hi_base/color.dart';
 
 /// 通用底层分页刷新列表页面框架
 /// M：Dao返回数据模型   L：列表数据模型  T：具体Widget

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/constant/color.dart';
+import 'package:hi_base/color.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/page/favorite_page.dart';
 import 'package:flutter_bili_app/page/home_page.dart';

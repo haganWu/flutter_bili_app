@@ -3,7 +3,7 @@ import 'package:flutter_bili_app/navigator/bottom_navigator.dart';
 import 'package:flutter_bili_app/page/login_page.dart';
 import 'package:flutter_bili_app/page/registration_page.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../page/dark_mode_page.dart';

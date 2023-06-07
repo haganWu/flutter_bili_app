@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
-import 'package:flutter_bili_app/utils/view_util.dart';
-
+import 'package:hi_base/LogUtil.dart';
+import 'package:hi_base/view_util.dart';
 import '../http/model/video_model.dart';
 
 class ExpandableContent extends StatefulWidget {

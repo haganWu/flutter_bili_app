@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'LogUtil.dart';
+import 'package:hi_base/LogUtil.dart';
 import 'barrage_item.dart';
 import 'barrage_model.dart';
 import 'barrage_view_util.dart';
