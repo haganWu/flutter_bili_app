@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_bili_app/http/request/base_request.dart';
 
+import '../request/hi_base_request.dart';
+
 
 ///网络请求抽象列
 abstract class HiNetAdapter {
@@ -11,7 +13,7 @@ abstract class HiNetAdapter {
 /// 统一网络层返回格式
 class HiNetResponse<T>{
   T data;
-  BaseRequest? request;
+  HiBaseRequest? request;
   int statusCode;
   String? statusMessage;
   dynamic extra;

@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bili_app/http/core/hi_net_adapter.dart';
 import 'package:flutter_bili_app/http/core/hi_net_error.dart';
-import 'package:flutter_bili_app/http/request/base_request.dart';
+
+import '../request/hi_base_request.dart';
 
 /// 适配dio网络请求框架
 
 class DioAdapter extends HiNetAdapter {
   @override
-  Future<HiNetResponse<T>> send<T>(BaseRequest request) async {
+  Future<HiNetResponse<T>> send<T>(HiBaseRequest request) async {
     Response? response;
     Options options = Options(headers: request.header);
     DioError? error;
@@ -36,7 +37,7 @@ class DioAdapter extends HiNetAdapter {
   }
 
   /// 构建HiNetResponse
-  Future<HiNetResponse<T>> buildRes<T>(Response? response, BaseRequest request) {
+  Future<HiNetResponse<T>> buildRes<T>(Response? response, HiBaseRequest request) {
     return Future.value(
         HiNetResponse(
             data: response?.data,
