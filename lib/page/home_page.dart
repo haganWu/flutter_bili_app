@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/core/hi_state.dart';
-import 'package:flutter_bili_app/http/core/hi_net_error.dart';
 import 'package:flutter_bili_app/http/dao/home_dao.dart';
 import 'package:flutter_bili_app/http/model/home_mo.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
@@ -16,6 +13,7 @@ import 'package:flutter_bili_app/utils/view_util.dart';
 import 'package:flutter_bili_app/widget/hi_navigation_bar.dart';
 import 'package:flutter_bili_app/widget/hi_tab.dart';
 import 'package:flutter_bili_app/widget/loading_container.dart';
+import 'package:hi_net/core/hi_net_error.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {

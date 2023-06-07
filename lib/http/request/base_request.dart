@@ -1,7 +1,8 @@
+import 'package:hi_net/request/hi_base_request.dart';
+
 import '../../utils/LogUtil.dart';
 import '../../utils/hi_constants.dart';
 import '../dao/login_dao.dart';
-import 'hi_base_request.dart';
 
 abstract class BaseRequest extends HiBaseRequest {
 

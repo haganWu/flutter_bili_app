@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/constant/color.dart';
 import 'package:flutter_bili_app/core/hi_state.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
-
-import '../http/core/hi_net_error.dart';
+import 'package:hi_net/core/hi_net_error.dart';
 import '../utils/toast.dart';
 
 /// 通用底层分页刷新列表页面框架

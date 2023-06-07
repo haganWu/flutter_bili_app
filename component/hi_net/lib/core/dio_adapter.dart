@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_bili_app/http/core/hi_net_adapter.dart';
-import 'package:flutter_bili_app/http/core/hi_net_error.dart';
-
 import '../request/hi_base_request.dart';
+import 'hi_net_adapter.dart';
+import 'hi_net_error.dart';
 
 /// 适配dio网络请求框架
 

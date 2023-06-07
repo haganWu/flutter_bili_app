@@ -1,9 +1,9 @@
 import 'package:flutter_bili_app/db/hi_cache.dart';
-import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/request/base_request.dart';
 import 'package:flutter_bili_app/http/request/login_request.dart';
 import 'package:flutter_bili_app/http/request/registration_request.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
+import 'package:hi_net/hi_net.dart';
 
 class LoginDao {
   static const BOARDING_PASS = "boarding-pass";

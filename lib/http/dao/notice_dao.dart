@@ -1,7 +1,7 @@
-import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/model/notice_mo.dart';
 import 'package:flutter_bili_app/http/request/notice_request.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
+import 'package:hi_net/hi_net.dart';
 
 class NoticeDao {
   static noticeList({int pageIndex = 1, int pageSize = 10}) async {

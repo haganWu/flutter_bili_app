@@ -1,6 +1,6 @@
-import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/model/profile_mo.dart';
 import 'package:flutter_bili_app/http/request/profile_request.dart';
+import 'package:hi_net/hi_net.dart';
 import '../../utils/LogUtil.dart';
 
 class ProfileDao {

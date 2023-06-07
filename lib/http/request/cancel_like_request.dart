@@ -1,5 +1,5 @@
-import 'hi_base_request.dart';
 import 'like_request.dart';
+import 'package:hi_net/request/hi_base_request.dart';
 
 class CancelLikeRequest extends LikeRequest {
   @override

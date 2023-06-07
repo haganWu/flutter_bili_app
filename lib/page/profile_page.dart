@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/http/core/hi_net_error.dart';
 import 'package:flutter_bili_app/http/dao/profile_dao.dart';
 import 'package:flutter_bili_app/http/model/profile_mo.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
 import 'package:flutter_bili_app/utils/view_util.dart';
 import 'package:flutter_bili_app/widget/hi_banner.dart';
 import 'package:flutter_bili_app/widget/hi_flexible_header.dart';
+import 'package:hi_net/core/hi_net_error.dart';
 
 import '../utils/toast.dart';
 import '../widget/benefit_card.dart';

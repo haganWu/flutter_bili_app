@@ -1,8 +1,7 @@
-import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/request/base_request.dart';
 import 'package:flutter_bili_app/http/request/cancel_like_request.dart';
 import 'package:flutter_bili_app/http/request/like_request.dart';
-
+import 'package:hi_net/hi_net.dart';
 import '../../utils/LogUtil.dart';
 
 class LikeDao {

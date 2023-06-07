@@ -1,8 +1,7 @@
-import 'package:flutter_bili_app/http/core/dio_adapter.dart';
-import 'package:flutter_bili_app/http/core/hi_net_adapter.dart';
-import 'package:flutter_bili_app/http/core/hi_net_error.dart';
-import 'package:flutter_bili_app/http/request/base_request.dart';
-import 'package:flutter_bili_app/utils/LogUtil.dart';
+import 'package:hi_net/request/hi_base_request.dart';
+import 'core/dio_adapter.dart';
+import 'core/hi_net_adapter.dart';
+import 'core/hi_net_error.dart';
 
 class HiNet {
   final String tag = "HiNet";
@@ -14,7 +13,7 @@ class HiNet {
     return _install ??= HiNet._();
   }
 
-  Future fire(BaseRequest request) async{
+  Future fire(HiBaseRequest request) async{
     HiNetResponse? response;
     dynamic error;
     try{
@@ -24,13 +23,13 @@ class HiNet {
       response = e.data;
     } catch(e) {
       error = e;
-      LogUtil.L(tag, e.toString());
+      print("$tag -- ${e.toString()}");
     }
     if(response == null){
-      LogUtil.L(tag, error.toString());
+      print("$tag -- ${error.toString()}");
     }
     var result = response?.data;
-    LogUtil.L(tag, "result: $result");
+    print("$tag -- result: $result");
 
     int? status = response?.statusCode??-1;
     switch(status){
@@ -46,8 +45,8 @@ class HiNet {
 
   }
 
-  Future<dynamic> send<T>(BaseRequest request) async{
-    LogUtil.L(tag, "url: ${request.url()}");
+  Future<dynamic> send<T>(HiBaseRequest request) async{
+    print("$tag -- url: ${request.url()}");
     HiNetAdapter adapter = DioAdapter();
     return adapter.send(request);
   }

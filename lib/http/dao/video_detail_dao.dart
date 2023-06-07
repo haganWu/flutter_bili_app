@@ -1,6 +1,6 @@
 import 'package:flutter_bili_app/http/request/video_detail_request.dart';
+import 'package:hi_net/hi_net.dart';
 import '../../utils/LogUtil.dart';
-import '../core/hi_net.dart';
 import '../model/video_detail_mo.dart';
 
 class VideoDetailDao {

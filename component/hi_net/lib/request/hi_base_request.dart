@@ -1,4 +1,3 @@
-
 enum HttpMethod { GET, POST, DELETE }
 
 /// 基础请求

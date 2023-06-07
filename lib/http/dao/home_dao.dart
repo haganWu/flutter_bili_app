@@ -1,7 +1,6 @@
-import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/model/home_mo.dart';
 import 'package:flutter_bili_app/utils/LogUtil.dart';
-
+import 'package:hi_net/hi_net.dart';
 import '../request/home_request.dart';
 
 // https://api.devio.org/uapi/fa/home/推荐?pageIndex=1&pageSize=10
